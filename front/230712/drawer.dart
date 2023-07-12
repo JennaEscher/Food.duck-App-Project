@@ -82,7 +82,7 @@ class CustomDrawer extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(0),
                 child: Image.asset(
-                  'assets/images/duck.jpg',
+                  'assets/images/icon.png',
                   height: 50,
                   width: 50,
                 ),

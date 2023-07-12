@@ -43,8 +43,15 @@ class MyApp extends StatelessWidget {
             ),
           ],
         ),
-        endDrawer: const Drawer(
-          child: CustomDrawer(), // CustomDrawer 위젯 사용
+        endDrawer: const SafeArea(
+          child: Drawer(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  bottomLeft: Radius.circular(50)),
+            ),
+            child: CustomDrawer(), // CustomDrawer 위젯 사용
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(30),
