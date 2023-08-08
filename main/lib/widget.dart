@@ -80,6 +80,7 @@ class SubText extends StatelessWidget {
 }
 
 class IconSection extends StatelessWidget {
+  //앱바 사용시 불필요
   const IconSection({super.key});
 
   @override
@@ -238,6 +239,50 @@ class _DropdownChoiceState extends State<DropdownChoice> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  const CustomAppBar({super.key, required this.scaffoldKey});
+
+  @override
+  Size get preferredSize => const Size.fromHeight(60);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      toolbarHeight: 60,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 20.0),
+        child: Image.asset(
+          'assets/images/icon.png',
+        ),
+      ),
+      actions: [
+        Container(
+          constraints: const BoxConstraints(
+            maxWidth: 100,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: IconButton(
+              icon: const Icon(
+                Icons.menu,
+                color: Colors.black,
+                size: 40,
+              ),
+              onPressed: () {
+                scaffoldKey.currentState?.openEndDrawer();
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

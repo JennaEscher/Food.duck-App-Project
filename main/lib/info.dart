@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'widget.dart';
+import 'drawer.dart';
 
 class Info extends StatelessWidget {
-  const Info({super.key});
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  Info({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,17 +35,24 @@ class Info extends StatelessWidget {
       ),
     );
 
-    return MaterialApp(
-      title: 'Food.duck()',
-      home: Scaffold(
-        body: SafeArea(
-          child: ListView(
-            children: [
-              const IconSection(),
-              const TitleSection("Info"),
-              mainSection,
-            ],
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: CustomAppBar(scaffoldKey: scaffoldKey),
+      endDrawer: const SafeArea(
+        child: Drawer(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(50), bottomLeft: Radius.circular(50)),
           ),
+          child: CustomDrawer(), // CustomDrawer 위젯 사용
+        ),
+      ),
+      body: SafeArea(
+        child: ListView(
+          children: [
+            const TitleSection("Info"),
+            mainSection,
+          ],
         ),
       ),
     );

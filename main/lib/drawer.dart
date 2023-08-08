@@ -3,6 +3,7 @@ import 'home_page.dart';
 import 'search_page.dart';
 import 'info.dart';
 import 'rand_condition.dart';
+import 'result.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -12,7 +13,7 @@ class CustomDrawer extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(right: 30.0),
+          padding: const EdgeInsets.only(right: 20.0),
           child: AppBar(
             toolbarHeight: 60,
             backgroundColor: Colors.transparent,
@@ -62,8 +63,7 @@ class CustomDrawer extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => const RandCondition()),
+                    MaterialPageRoute(builder: (context) => RandCondition()),
                   );
                 },
               ),
@@ -103,7 +103,7 @@ class CustomDrawer extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Info()),
+                    MaterialPageRoute(builder: (context) => Info()),
                   );
                 },
               ),
@@ -124,7 +124,7 @@ class CustomDrawer extends StatelessWidget {
                     // 예를 들면:
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
+                      MaterialPageRoute(builder: (context) => Result()),
                     );
                   },
                   child: Image.asset(

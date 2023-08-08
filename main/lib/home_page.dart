@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.only(
-                right: 30.0), //top:10 하거나 Appbar의 height올릴수도 있음
+                right: 20.0), //top:10 하거나 Appbar의 height올릴수도 있음
             child: IconButton(
               icon: const Icon(
                 Icons.menu,

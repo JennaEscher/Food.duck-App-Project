@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'widget.dart';
+import 'drawer.dart';
 
 class RandCondition extends StatelessWidget {
-  const RandCondition({super.key});
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  RandCondition({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -85,17 +87,24 @@ class RandCondition extends StatelessWidget {
       ),
     );
 
-    return MaterialApp(
-      title: 'Food.duck()',
-      home: Scaffold(
-        body: SafeArea(
-          child: ListView(
-            children: [
-              const IconSection(),
-              const TitleSection("랜덤 추천"),
-              mainSection,
-            ],
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: CustomAppBar(scaffoldKey: scaffoldKey),
+      endDrawer: const SafeArea(
+        child: Drawer(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(50), bottomLeft: Radius.circular(50)),
           ),
+          child: CustomDrawer(), // CustomDrawer 위젯 사용
+        ),
+      ),
+      body: SafeArea(
+        child: ListView(
+          children: [
+            const TitleSection("랜덤 추천"),
+            mainSection,
+          ],
         ),
       ),
     );
