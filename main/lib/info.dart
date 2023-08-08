@@ -11,9 +11,9 @@ class Info extends StatelessWidget {
       child: const Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          subText("Developers", "SGCC 프로젝트"),
+          SubText("Developers", "SGCC 프로젝트"),
           SizedBox(height: 15),
-          subText("Contacts", "foodduck.app@gmail.com"),
+          SubText("Contacts", "foodduck.app@gmail.com"),
         ],
       ),
     );
@@ -39,8 +39,8 @@ class Info extends StatelessWidget {
         body: SafeArea(
           child: ListView(
             children: [
-              const iconSection(),
-              const titleSection("Info"),
+              const IconSection(),
+              const TitleSection("Info"),
               mainSection,
             ],
           ),

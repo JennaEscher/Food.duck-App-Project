@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'widget.dart';
 
-class Rand_condition extends StatelessWidget {
-  const Rand_condition({super.key});
+class RandCondition extends StatelessWidget {
+  const RandCondition({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class Rand_condition extends StatelessWidget {
       child: const Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          subText("1. 위치 선택", "음식점까지의 이동 범위를 설정할 수 있어요."),
+          SubText("1. 위치 선택", "음식점까지의 이동 범위를 설정할 수 있어요."),
           SizedBox(height: 15),
           LocationSlider(),
           SizedBox(height: 15),
@@ -24,7 +24,7 @@ class Rand_condition extends StatelessWidget {
       child: const Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          subText("2. 메뉴 선택", "원하시는 메뉴를 선택할 수 있어요."),
+          SubText("2. 메뉴 선택", "원하시는 메뉴를 선택할 수 있어요."),
           SizedBox(height: 20),
           DropdownChoice(listMenu),
           SizedBox(height: 15),
@@ -37,7 +37,7 @@ class Rand_condition extends StatelessWidget {
       child: const Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          subText("3. 가격대 선택", "희망하시는 가격대를 선택할 수 있어요."),
+          SubText("3. 가격대 선택", "희망하시는 가격대를 선택할 수 있어요."),
           SizedBox(height: 20),
           DropdownChoice(listCost),
           SizedBox(height: 20),
@@ -45,28 +45,26 @@ class Rand_condition extends StatelessWidget {
       ),
     );
 
-    Widget buttonSection = Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              textStyle: const TextStyle(
-                fontSize: 20,
-                fontFamily: "NanumSquare_ac",
-                fontWeight: FontWeight.w600,
-              ),
-              backgroundColor: Colors.amberAccent,
-              foregroundColor: Colors.black,
-              shadowColor: Colors.transparent,
-              elevation: 0.0,
-              fixedSize: const Size(310, 50),
+    Widget buttonSection = Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            textStyle: const TextStyle(
+              fontSize: 20,
+              fontFamily: "NanumSquare_ac",
+              fontWeight: FontWeight.w600,
             ),
-            onPressed: () {},
-            child: const Text("선택 완료"),
+            backgroundColor: Colors.amberAccent,
+            foregroundColor: Colors.black,
+            shadowColor: Colors.transparent,
+            elevation: 0.0,
+            fixedSize: const Size(310, 50),
           ),
-        ],
-      ),
+          onPressed: () {},
+          child: const Text("선택 완료"),
+        ),
+      ],
     );
 
     Widget mainSection = Container(
@@ -93,8 +91,8 @@ class Rand_condition extends StatelessWidget {
         body: SafeArea(
           child: ListView(
             children: [
-              const iconSection(),
-              const titleSection("랜덤 추천"),
+              const IconSection(),
+              const TitleSection("랜덤 추천"),
               mainSection,
             ],
           ),

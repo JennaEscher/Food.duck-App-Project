@@ -42,10 +42,10 @@ String getDetails(time) {
   return result;
 }
 
-class subText extends StatelessWidget {
+class SubText extends StatelessWidget {
   final String title;
   final String details;
-  const subText(this.title, this.details, {super.key});
+  const SubText(this.title, this.details, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +79,8 @@ class subText extends StatelessWidget {
   }
 }
 
-class iconSection extends StatelessWidget {
-  const iconSection({super.key});
+class IconSection extends StatelessWidget {
+  const IconSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -101,9 +101,9 @@ class iconSection extends StatelessWidget {
   }
 }
 
-class titleSection extends StatelessWidget {
+class TitleSection extends StatelessWidget {
   final String title;
-  const titleSection(this.title, {super.key});
+  const TitleSection(this.title, {super.key});
 
   @override
   Widget build(BuildContext context) {

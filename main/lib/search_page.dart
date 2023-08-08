@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//입력: 태그리스트, 최근검색어리스트, 출력://검색어, 태그리스트, 최근검색어리스트
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
 
@@ -9,11 +10,26 @@ class SearchPage extends StatefulWidget {
 
 class SearchPageState extends State<SearchPage> {
   final TextEditingController _searchController = TextEditingController();
-  final List<String> tags = [
-    '#한식', '#양식', '#일식', '#중식', '#아침', '#점심', '#저녁', '#술약속',
-    '#짧은태그3', '#몹시매우미칠듯이긴태그',
-    '#한식', '#혼밥가능', '#신촌역', '#대흥', '#후문', '#정문', '#남문',
-    // ... 다른 태그들 추가 ...
+  List<String> tags = [
+    '#한식',
+    '#양식',
+    '#일식',
+    '#중식',
+    '#아침',
+    '#점심',
+    '#저녁',
+    '#주점',
+    '#간식',
+    '#소개팅',
+    '#노브레이크타임',
+    '#한식',
+    '#혼밥가능',
+    '#신촌역',
+    '#대흥',
+    '#후문',
+    '#정문',
+    '#남문',
+    '#밥약추천'
   ];
 
   @override
@@ -22,14 +38,27 @@ class SearchPageState extends State<SearchPage> {
     super.dispose();
   }
 
-  void _addTagToSearchBar(String tag) {
+  void clickTagBottons(String tag) {
     setState(() {
-      _searchController.text += "$tag ";
+      selectedTags = ['선택된 태그:']; //[](빈 리스트)로 수정 예정
+      for (int i = 0; i < isSelected.length; i++) {
+        if (isSelected[i]) {
+          selectedTags.add(tags[i].substring(1)); //#제외
+        }
+      }
     });
   }
 
+  List<bool> isSelected = []; //태그들 선택여부 리스트
+  List<String> selectedTags = ['선택된 태그:']; //선택된태그 리스트
   String searchText = '';
-  List<String> recentSearches = [];
+  List<String> recentSearches = []; //최근검색어 리스트
+
+  @override
+  void initState() {
+    super.initState();
+    isSelected = List.generate(tags.length, (index) => false); // isSelected 초기화
+  }
 
   void _submitSearch() {
     setState(() {
@@ -41,21 +70,20 @@ class SearchPageState extends State<SearchPage> {
         }
       });
     });
-    // 검색 기능을 구현하는 로직을 추가 or 검색어를 다른 페이지로 넘기기
-    // 검색어 넘기면서 페이지 이동하는 코드작성
+    // 검색 기능을 구현하는 로직을 추가
+    //검색어, 태그리스트, 최근검색어리스트를 다른 페이지로 넘기기
+  }
+
+  void clickRecentSearches() {
+    //최근검색어 눌렀을 때
+
+    //클릭한 최근검색어, 빈 태그리스트, 최근검색어리스트를 다른 페이지로 넘기기
   }
 
   void _removeSearchKeyword(String keyword) {
     setState(() {
       recentSearches.remove(keyword);
     });
-  }
-
-  String _truncateWithEllipsis(String text, int maxLength) {
-    if (text.length > maxLength) {
-      return '${text.substring(0, maxLength - 3)}...';
-    }
-    return text;
   }
 
   @override
@@ -70,6 +98,7 @@ class SearchPageState extends State<SearchPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
+              //검색창
               height: 45,
               width: 330,
               decoration: BoxDecoration(
@@ -96,6 +125,9 @@ class SearchPageState extends State<SearchPage> {
                             hintText: 'Search',
                             border: InputBorder.none,
                           ),
+                          onSubmitted: (value) {
+                            _submitSearch(); // 엔터를 입력했을 때 동작
+                          },
                         ),
                       ),
                     ),
@@ -147,16 +179,21 @@ class SearchPageState extends State<SearchPage> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 210, 210, 210),
+                        color: isSelected[i]
+                            ? Colors.amber[300]
+                            : const Color.fromARGB(255, 210, 210, 210),
                         border: Border.all(
-                          color: const Color.fromARGB(255, 210, 210, 210),
+                          color: isSelected[i]
+                              ? const Color.fromARGB(255, 255, 213, 79)
+                              : const Color.fromARGB(255, 210, 210, 210),
                           width: 3,
                         ),
                         borderRadius: BorderRadius.circular(50),
                       ),
                       child: InkWell(
                         onTap: () {
-                          _addTagToSearchBar(tags[i]);
+                          isSelected[i] = !isSelected[i];
+                          clickTagBottons(tags[i]);
                         },
                         child: Text(tags[i]),
                       ),
@@ -164,6 +201,22 @@ class SearchPageState extends State<SearchPage> {
                 ],
               ),
             ),
+            SizedBox(
+              //태그리스트 확인용, 지울 부분
+              child: Row(
+                children: [
+                  for (String tag in selectedTags)
+                    Container(
+                      margin: const EdgeInsets.only(right: 1),
+                      padding: const EdgeInsets.all(1),
+                      child: Text(tag),
+                    ),
+                ],
+              ),
+            ),
+            Row(
+                //검색어 확인용, 지울 부분
+                children: [Text('검색어: $searchText')]),
             const SizedBox(
               height: 30,
             ),
@@ -194,12 +247,19 @@ class SearchPageState extends State<SearchPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        InkWell(
-                          onTap: () {
-                            _addTagToSearchBar(recentSearches[i]);
-                          },
-                          child: Text(
-                            _truncateWithEllipsis(recentSearches[i], 24),
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                searchText = recentSearches[i];
+                              });
+                              clickRecentSearches();
+                            },
+                            child: Text(
+                              recentSearches[i],
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
                           ),
                         ),
                         IconButton(

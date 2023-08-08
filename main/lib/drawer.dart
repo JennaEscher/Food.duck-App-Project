@@ -63,7 +63,7 @@ class CustomDrawer extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const Rand_condition()),
+                        builder: (context) => const RandCondition()),
                   );
                 },
               ),
