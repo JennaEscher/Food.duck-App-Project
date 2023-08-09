@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'back/data_fetch.dart';
+import 'package:korea_regexp/korea_regexp.dart';
+
 
 //입력: 태그리스트, 최근검색어리스트, 출력://검색어, 태그리스트, 최근검색어리스트
 class SearchPage extends StatefulWidget {
@@ -10,27 +13,7 @@ class SearchPage extends StatefulWidget {
 
 class SearchPageState extends State<SearchPage> {
   final TextEditingController _searchController = TextEditingController();
-  List<String> tags = [
-    '#한식',
-    '#양식',
-    '#일식',
-    '#중식',
-    '#아침',
-    '#점심',
-    '#저녁',
-    '#주점',
-    '#간식',
-    '#소개팅',
-    '#노브레이크타임',
-    '#한식',
-    '#혼밥가능',
-    '#신촌역',
-    '#대흥',
-    '#후문',
-    '#정문',
-    '#남문',
-    '#밥약추천'
-  ];
+
 
   @override
   void dispose() {
@@ -40,7 +23,7 @@ class SearchPageState extends State<SearchPage> {
 
   void clickTagBottons(String tag) {
     setState(() {
-      selectedTags = ['선택된 태그:']; //[](빈 리스트)로 수정 예정
+      selectedTags = []; //[](빈 리스트)로 수정 예정
       for (int i = 0; i < isSelected.length; i++) {
         if (isSelected[i]) {
           selectedTags.add(tags[i].substring(1)); //#제외
@@ -50,9 +33,10 @@ class SearchPageState extends State<SearchPage> {
   }
 
   List<bool> isSelected = []; //태그들 선택여부 리스트
-  List<String> selectedTags = ['선택된 태그:']; //선택된태그 리스트
+  List<String> selectedTags = []; //선택된태그 리스트
   String searchText = '';
   List<String> recentSearches = []; //최근검색어 리스트
+  late List<String> terms;
 
   @override
   void initState() {
@@ -71,6 +55,9 @@ class SearchPageState extends State<SearchPage> {
       });
     });
     // 검색 기능을 구현하는 로직을 추가
+
+    changeSearchTerm(searchText, selectedTags);
+
     //검색어, 태그리스트, 최근검색어리스트를 다른 페이지로 넘기기
   }
 
@@ -85,6 +72,36 @@ class SearchPageState extends State<SearchPage> {
       recentSearches.remove(keyword);
     });
   }
+
+  List<String> tag_check (List<String> tags){
+    List<String> result = [];
+    for( int i  = 0; i< listfood.length ; i++){
+      result.add(listfood[i]["name"]);
+    }
+    return result;
+  }
+
+  void changeSearchTerm(String text, List<String> tags) {
+
+    print("태그 $tags");
+    List<String> list = tag_check(tags) ;
+    print("리스트 $list");
+    RegExp regExp = getRegExp(
+        text,
+        RegExpOptions(
+          initialSearch: true,
+          startsWith: false,
+          endsWith: false,
+          fuzzy: false,
+          ignoreSpace: true,
+          ignoreCase: false,
+        ));
+    print(regExp);
+    terms =
+        list.where((element) => regExp.hasMatch(element)).toList();
+    print(terms);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -175,6 +192,29 @@ class SearchPageState extends State<SearchPage> {
                 spacing: 15,
                 runSpacing: 10,
                 children: [
+                  for (int i = 0; i < categorys.length; i++)
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        color: isSelected[i]
+                            ? Colors.amber[300]
+                            : const Color.fromARGB(255, 210, 210, 210),
+                        border: Border.all(
+                          color: isSelected[i]
+                              ? const Color.fromARGB(255, 255, 213, 79)
+                              : const Color.fromARGB(255, 210, 210, 210),
+                          width: 3,
+                        ),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          isSelected[i] = !isSelected[i];
+                          clickTagBottons(categorys[i]);
+                        },
+                        child: Text(categorys[i]),
+                      ),
+                    ),
                   for (int i = 0; i < tags.length; i++)
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),

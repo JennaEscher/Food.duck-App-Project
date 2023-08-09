@@ -14,15 +14,19 @@ Map category = {};
 Map trav_time = {};
 Map tag = {};
 Map listmeta = {};
+List<String> tags=[];
+List<String> categorys=[];
 
 void makelist(var parsed_list) {
-  int idx = 1;
+  int idx = 0;
   for (var i in parsed_list) {
     name[i["name"]] = idx;
     if (category.containsKey(i["category"])) {
       category[i["category"]].add(idx);
     } else {
+      categorys.add(i["category"]);
       category[i["category"]] = <int>[];
+
       category[i["category"]].add(idx);
     }
     if (trav_time.containsKey(i["trav_time"])) {
@@ -32,11 +36,12 @@ void makelist(var parsed_list) {
       trav_time[i["trav_time"]].add(idx);
     }
 
-    for (var j in i["tag"]) {
+    for (var j in i["tags"]) {
+      if(!tags.contains(j)) tags.add(j);
       if (tag.containsKey(j)) {
         tag[j].add(idx);
       } else {
-        tag[j] = <int>[];
+        tag[j] = [];
         tag[j].add(idx);
       }
     }
@@ -57,7 +62,7 @@ Future<int> init(CounterStorage cs) async {
       );
       print("Firebase Initialized");
       final storageReference = FirebaseStorage.instance
-          .refFromURL("gs://foodduck-23ca8.appspot.com/food.json");
+          .refFromURL("gs://foodduck-23ca8.appspot.com/test.json");
       try {
         const oneMegabyte = 1024 * 1024;
         final data = await storageReference.getData(oneMegabyte);

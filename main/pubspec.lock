@@ -224,6 +224,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.7"
+  korea_regexp:
+    dependency: "direct main"
+    description:
+      name: korea_regexp
+      sha256: "88cbfa570b5453ba305902160ea37298d8914889306cc8ed2977012f14d14faa"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   lints:
     dependency: transitive
     description:

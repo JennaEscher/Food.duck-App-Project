@@ -14,6 +14,8 @@ void _checkDataFetch() async {
   category.forEach((key, value) => print('${key} : ${value}'));
   print("trav_time");
   trav_time.forEach((key, value) => print('${key} : ${value}'));
+  print(tags);
+  print(categorys);
 }
 
 void main() {

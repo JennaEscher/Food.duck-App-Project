@@ -39,6 +39,7 @@ dependencies:
   firebase_storage: ^11.2.5
   firebase_core_dart: ^1.0.1
   path_provider: ^2.1.0
+  korea_regexp: ^1.0.1
 
 dev_dependencies:
   flutter_test:
