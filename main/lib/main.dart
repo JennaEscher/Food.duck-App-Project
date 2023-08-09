@@ -1,7 +1,24 @@
 import 'package:flutter/material.dart';
 import 'home_page.dart';
+import 'back/data_fetch.dart';
+
+void _checkDataFetch() async {
+  CounterStorage storage = CounterStorage();
+  var t = await init(storage);
+  print(t);
+  print("name");
+  name.forEach((key, value) => print('${key} : ${value}'));
+  print("tag");
+  tag.forEach((key, value) => print('${key} : ${value}'));
+  print("category");
+  category.forEach((key, value) => print('${key} : ${value}'));
+  print("trav_time");
+  trav_time.forEach((key, value) => print('${key} : ${value}'));
+}
 
 void main() {
+  _checkDataFetch();
+
   runApp(const MyApp());
 }
 
