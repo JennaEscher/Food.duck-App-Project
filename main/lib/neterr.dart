@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'widget.dart'; 
 import 'drawer.dart';
 import 'home_page.dart';
 
@@ -17,38 +18,7 @@ class Neterr extends StatelessWidget {
 
       key: scaffoldKey,
       backgroundColor: Colors.white,
-      appBar: AppBar(//공통 앱바 안건드림
-        //drawer기능 때문에 Appbar 필요
-        toolbarHeight: 60,
-        backgroundColor: Colors.transparent,
-        elevation: 0, // 그림자
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(
-                right: 30.0), //top:10 하거나 Appbar의 height올릴수도 있음
-            child: IconButton(
-              icon: const Icon(
-                Icons.menu,
-                color: Colors.black,
-                size: 40,
-              ),
-              onPressed: () {
-                scaffoldKey.currentState?.openEndDrawer();
-              },
-            ),
-          ),
-        ],
-        leading:
-        Padding(
-            padding: const EdgeInsets.only(
-                left: 15.0),
-                child:Image.asset(
-          'assets/images/icon.png',
-          height: 40,
-          width: 40,
-          ),
-        ),
-      ),
+      appBar: CustomAppBar(scaffoldKey: scaffoldKey),
       endDrawer: const SafeArea(
         child: Drawer(
           shape: RoundedRectangleBorder(
@@ -58,7 +28,6 @@ class Neterr extends StatelessWidget {
           child: CustomDrawer(), // CustomDrawer 위젯 사용
         ),
       ),
-
       body: Padding(//스크롤(열(텍스트, 자리용빈칸, 홈버튼))으로 구성됨
         
         padding: const EdgeInsets.all(10),
