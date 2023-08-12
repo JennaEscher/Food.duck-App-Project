@@ -33,6 +33,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  cache_manager:
+    dependency: "direct main"
+    description:
+      name: cache_manager
+      sha256: "2460bf4c2fd57dd4f4c17694cef459cdd055ed224ed6397d0c27df042ac5810a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0+4"
   characters:
     dependency: transitive
     description:
