@@ -20,7 +20,7 @@ List<int> listmeta = [];
 List<String> tags=[];
 List<String> categorys=[];
 
-void makelist(var parsed_list) async {
+Future<int> makelist(var parsed_list) async {
   int idx = 0;
   for (var i in parsed_list) {
     name[i["name"]] = idx;
@@ -47,11 +47,12 @@ void makelist(var parsed_list) async {
         tag[j].add(idx);
       }
     }
-    if(await InitCaches(i)==0){
-      WriteCaches(i,0);
+    if(await InitCaches(i["name"]) == 0){
+      WriteCaches(i["name"],'0');
     }
     idx++;
   }
+  return 0;
 }
 
 Future<int> init(CounterStorage cs) async {
@@ -78,7 +79,8 @@ Future<int> init(CounterStorage cs) async {
         await WriteCaches('food',fooddata);
 
         listfood = jsonDecode(fooddata);
-        makelist(listfood);
+        print(listfood);
+        await makelist(listfood);
         // Data for "images/island.jpg" is returned, use this as needed.
       } on FirebaseException catch (e) {
         print("{$e}");
@@ -102,7 +104,7 @@ Future<int> init(CounterStorage cs) async {
         }
         final String? fooddata = await ReadCaches('food');
         listfood = jsonDecode(fooddata!);
-        makelist(listfood);
+        await makelist(listfood);
       } on FirebaseException catch (e) {
         print("{$e}");
         // Handle any errors.
@@ -120,9 +122,8 @@ Future<int?> InitCaches(var k) async{
   CacheManagerUtils.conditionalCache(
       key: k,
       valueType: ValueType.StringValue,
-      actionIfNull: CacheResult = 0,
-      actionIfNotNull: CacheResult = 1
-  );
+      actionIfNull: (){CacheResult = 0;},
+      actionIfNotNull: (){CacheResult = 1;});
   return  CacheResult;
 }
 
