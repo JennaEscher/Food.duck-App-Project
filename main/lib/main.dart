@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'back/data_fetch.dart';
 
-void _checkDataFetch() async {
+ _checkDataFetch() {
   CounterStorage storage = CounterStorage();
-  var t = await init(storage);
+  var t = init(storage);
   print(t);
   print("name");
   name.forEach((key, value) => print('${key} : ${value}'));

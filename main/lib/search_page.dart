@@ -21,19 +21,44 @@ class SearchPageState extends State<SearchPage> {
     super.dispose();
   }
 
-  void clickTagBottons(String tag) {
+  void clickTagBottons(int tag) {
     setState(() {
-      selectedTags = []; //[](빈 리스트)로 수정 예정
-      for (int i = 0; i < isSelected.length; i++) {
-        if (isSelected[i]) {
-          selectedTags.add(tags[i].substring(1)); //#제외
-        }
+      // selectedTags = []; //[](빈 리스트)로 수정 예정
+      // for (int i = 0; i < isSelected.length; i++) {
+      //   if (isSelected[i]) {
+      //     selectedTags.add(tags[i].substring(0)); //#제외
+      //   }else{
+      //     selectedTags.remove(tags[i].substring(0));
+      //   }
+      // }
+      if (isSelected[tag]) {
+        selectedTags.add(tags[tag]);
+      }else{
+        selectedTags.remove(tags[tag]);
       }
     });
   }
-
+  void clickCategoryBottons(int cate) {
+    setState(() {
+      // selectedCates = []; //[](빈 리스트)로 수정 예정
+      // for (int i = 0; i < isSelectedCate.length; i++) {
+      //   if (isSelectedCate[i]) {
+      //     selectedCates.add(cate[i].substring(0)); //#제외
+      //   }else{
+      //     selectedCates.remove(cate[i].substring(0));
+      //   }
+      // }
+      if (isSelectedCate[cate]) {
+          selectedCates.add(categorys[cate]);
+        }else{
+          selectedCates.remove(categorys[cate]);
+      }
+    });
+  }
   List<bool> isSelected = []; //태그들 선택여부 리스트
   List<String> selectedTags = []; //선택된태그 리스트
+  List<bool> isSelectedCate = []; //카테고리 선택여부 리스트
+  List<String> selectedCates = []; //선택된카테고리 리스트
   String searchText = '';
   List<String> recentSearches = []; //최근검색어 리스트
   late List<String> terms;
@@ -42,6 +67,7 @@ class SearchPageState extends State<SearchPage> {
   void initState() {
     super.initState();
     isSelected = List.generate(tags.length, (index) => false); // isSelected 초기화
+    isSelectedCate = List.generate(categorys.length, (index) => false); // isSelectedCate 초기화
   }
 
   void _submitSearch() {
@@ -56,7 +82,7 @@ class SearchPageState extends State<SearchPage> {
     });
     // 검색 기능을 구현하는 로직을 추가
 
-    changeSearchTerm(searchText, selectedTags);
+    changeSearchTerm(searchText, selectedTags, selectedCates);
 
     //검색어, 태그리스트, 최근검색어리스트를 다른 페이지로 넘기기
   }
@@ -73,18 +99,26 @@ class SearchPageState extends State<SearchPage> {
     });
   }
 
-  List<String> tag_check (List<String> tags){
+  List<String> tag_check (List<String> tags, List<String> cate){
     List<String> result = [];
-    for( int i  = 0; i< listfood.length ; i++){
-      result.add(listfood[i]["name"]);
+    List<int> tmp = Iterable<int>.generate(listfood.length).toList();
+    for( int i  = 0; i< tags.length ; i++){
+      tmp.removeWhere((item) => !tag[tags[i]].contains(item));
+    }
+    for( int i  = 0; i< cate.length ; i++){
+      tmp.removeWhere((item) => !category[cate[i]].contains(item));
+    }
+    for( int i  = 0; i< tmp.length ; i++){
+      result.add(listfood[tmp[i]]["name"]);
     }
     return result;
   }
 
-  void changeSearchTerm(String text, List<String> tags) {
+  void changeSearchTerm(String text, List<String> tags,List<String> cate) {
 
     print("태그 $tags");
-    List<String> list = tag_check(tags) ;
+    print("카테고리 $cate");
+    List<String> list = tag_check(tags, cate) ;
     print("리스트 $list");
     RegExp regExp = getRegExp(
         text,
@@ -196,11 +230,11 @@ class SearchPageState extends State<SearchPage> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
-                        color: isSelected[i]
+                        color: isSelectedCate[i]
                             ? Colors.amber[300]
                             : const Color.fromARGB(255, 210, 210, 210),
                         border: Border.all(
-                          color: isSelected[i]
+                          color: isSelectedCate[i]
                               ? const Color.fromARGB(255, 255, 213, 79)
                               : const Color.fromARGB(255, 210, 210, 210),
                           width: 3,
@@ -209,8 +243,8 @@ class SearchPageState extends State<SearchPage> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          isSelected[i] = !isSelected[i];
-                          clickTagBottons(categorys[i]);
+                          isSelectedCate[i] = !isSelectedCate[i];
+                          clickCategoryBottons(i);
                         },
                         child: Text(categorys[i]),
                       ),
@@ -233,7 +267,7 @@ class SearchPageState extends State<SearchPage> {
                       child: InkWell(
                         onTap: () {
                           isSelected[i] = !isSelected[i];
-                          clickTagBottons(tags[i]);
+                          clickTagBottons(i);
                         },
                         child: Text(tags[i]),
                       ),
