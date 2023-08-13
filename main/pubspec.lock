@@ -33,6 +33,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  cache_manager:
+    dependency: "direct main"
+    description:
+      name: cache_manager
+      sha256: "2460bf4c2fd57dd4f4c17694cef459cdd055ed224ed6397d0c27df042ac5810a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0+4"
   characters:
     dependency: transitive
     description:
@@ -372,10 +380,10 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences_foundation
-      sha256: f39696b83e844923b642ce9dd4bd31736c17e697f6731a5adf445b1274cf3cd4
+      sha256: d29753996d8eb8f7619a1f13df6ce65e34bc107bef6330739ed76f18b22310ef
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.2"
+    version: "2.3.3"
   shared_preferences_linux:
     dependency: transitive
     description:

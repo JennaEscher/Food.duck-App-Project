@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'widget.dart'; 
+import 'widget.dart';
 import 'drawer.dart';
 import 'home_page.dart';
 
@@ -52,7 +52,7 @@ class Neterr extends StatelessWidget {
                       fontWeight: FontWeight.bold, color: Color.fromRGBO(0, 0, 0, 1),
                       
                       ),
-                      
+
                     ),
 
                     TextSpan(text:"서버에 연결할 수  없습니다\n홈으로 돌아가세요",style:TextStyle(
@@ -88,8 +88,8 @@ class Neterr extends StatelessWidget {
               },
               ),
               ),
-              
-              
+
+
 
 
             ],
