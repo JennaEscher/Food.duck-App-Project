@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'back/data_fetch.dart';
 import 'package:korea_regexp/korea_regexp.dart';
 
-
 //입력: 태그리스트, 최근검색어리스트, 출력://검색어, 태그리스트, 최근검색어리스트
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -14,9 +13,9 @@ class SearchPage extends StatefulWidget {
 class SearchPageState extends State<SearchPage> {
   final TextEditingController _searchController = TextEditingController();
 
-
   @override
   void dispose() {
+    _searchController.removeListener(() {});
     _searchController.dispose();
     super.dispose();
   }
@@ -33,11 +32,12 @@ class SearchPageState extends State<SearchPage> {
       // }
       if (isSelected[tag]) {
         selectedTags.add(tags[tag]);
-      }else{
+      } else {
         selectedTags.remove(tags[tag]);
       }
     });
   }
+
   void clickCategoryBottons(int cate) {
     setState(() {
       // selectedCates = []; //[](빈 리스트)로 수정 예정
@@ -49,12 +49,13 @@ class SearchPageState extends State<SearchPage> {
       //   }
       // }
       if (isSelectedCate[cate]) {
-          selectedCates.add(categorys[cate]);
-        }else{
-          selectedCates.remove(categorys[cate]);
+        selectedCates.add(categorys[cate]);
+      } else {
+        selectedCates.remove(categorys[cate]);
       }
     });
   }
+
   List<bool> isSelected = []; //태그들 선택여부 리스트
   List<String> selectedTags = []; //선택된태그 리스트
   List<bool> isSelectedCate = []; //카테고리 선택여부 리스트
@@ -67,10 +68,29 @@ class SearchPageState extends State<SearchPage> {
   void initState() {
     super.initState();
     isSelected = List.generate(tags.length, (index) => false); // isSelected 초기화
-    isSelectedCate = List.generate(categorys.length, (index) => false); // isSelectedCate 초기화
+    isSelectedCate =
+        List.generate(categorys.length, (index) => false); // isSelectedCate 초기화
+    _searchController.addListener(() {
+      final String text = _searchController.text;
+      _searchController.value = _searchController.value.copyWith(
+        text: text,
+        selection: TextSelection(
+          baseOffset: text.length,
+          extentOffset: text.length,
+        ),
+        composing: TextRange.empty,
+      );
+    });
   }
 
-  void _submitSearch() {
+  void _submitSearch() async {
+    var cache = await ReadCaches('recentSearches');
+    recentSearches = cache.toString().split('\n');
+    // 검색어 리스트가 5개 이상이면 가장 오래된 검색어 삭제
+    if (recentSearches.length >= 5) {
+      recentSearches.removeLast();
+    }
+    recentSearches.forEach((element) => print(element));
     setState(() {
       searchText = _searchController.text.trim();
       setState(() {
@@ -80,6 +100,8 @@ class SearchPageState extends State<SearchPage> {
         }
       });
     });
+    // 최근 검색어 리스트를 캐시에 저장
+    WriteCaches('recentSearches', recentSearches.join('\n'));
     // 검색 기능을 구현하는 로직을 추가
 
     changeSearchTerm(searchText, selectedTags, selectedCates);
@@ -99,26 +121,25 @@ class SearchPageState extends State<SearchPage> {
     });
   }
 
-  List<String> tag_check (List<String> tags, List<String> cate){
+  List<String> tag_check(List<String> tags, List<String> cate) {
     List<String> result = [];
     List<int> tmp = Iterable<int>.generate(listfood.length).toList();
-    for( int i  = 0; i< tags.length ; i++){
+    for (int i = 0; i < tags.length; i++) {
       tmp.removeWhere((item) => !tag[tags[i]].contains(item));
     }
-    for( int i  = 0; i< cate.length ; i++){
+    for (int i = 0; i < cate.length; i++) {
       tmp.removeWhere((item) => !category[cate[i]].contains(item));
     }
-    for( int i  = 0; i< tmp.length ; i++){
+    for (int i = 0; i < tmp.length; i++) {
       result.add(listfood[tmp[i]]["name"]);
     }
     return result;
   }
 
-  void changeSearchTerm(String text, List<String> tags,List<String> cate) {
-
+  void changeSearchTerm(String text, List<String> tags, List<String> cate) {
     print("태그 $tags");
     print("카테고리 $cate");
-    List<String> list = tag_check(tags, cate) ;
+    List<String> list = tag_check(tags, cate);
     print("리스트 $list");
     RegExp regExp = getRegExp(
         text,
@@ -131,11 +152,9 @@ class SearchPageState extends State<SearchPage> {
           ignoreCase: false,
         ));
     print(regExp);
-    terms =
-        list.where((element) => regExp.hasMatch(element)).toList();
+    terms = list.where((element) => regExp.hasMatch(element)).toList();
     print(terms);
   }
-
 
   @override
   Widget build(BuildContext context) {
