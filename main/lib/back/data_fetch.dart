@@ -10,15 +10,14 @@ import '../firebase_options.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cache_manager/cache_manager.dart';
 
-
 List<dynamic> listfood = [];
 Map name = {};
 Map category = {};
 Map trav_time = {};
 Map tag = {};
 List<int> listmeta = [];
-List<String> tags=[];
-List<String> categorys=[];
+List<String> tags = [];
+List<String> categorys = [];
 
 Future<int> makelist(var parsed_list) async {
   int idx = 0;
@@ -39,7 +38,7 @@ Future<int> makelist(var parsed_list) async {
       trav_time[i["trav_time"]].add(idx);
     }
     for (var j in i["tags"]) {
-      if(!tags.contains(j)) tags.add(j);
+      if (!tags.contains(j)) tags.add(j);
       if (tag.containsKey(j)) {
         tag[j].add(idx);
       } else {
@@ -47,8 +46,8 @@ Future<int> makelist(var parsed_list) async {
         tag[j].add(idx);
       }
     }
-    if(await InitCaches(i["name"]) == 0){
-      WriteCaches(i["name"],'0');
+    if (await InitCaches(i["name"]) == 0) {
+      WriteCaches(i["name"], '0');
     }
     idx++;
   }
@@ -76,7 +75,7 @@ Future<int> init(CounterStorage cs) async {
         print(fooddata);
 
         await InitCaches('food');
-        await WriteCaches('food',fooddata);
+        await WriteCaches('food', fooddata);
 
         listfood = jsonDecode(fooddata);
         print(listfood);
@@ -86,6 +85,9 @@ Future<int> init(CounterStorage cs) async {
         print("{$e}");
         // Handle any errors.
       }
+
+      InitCaches('recentSearches');
+
       return 0;
     } catch (e) {
       //로컬 파일이 없어서 생기는 오류(PathNotFoundException).
@@ -99,7 +101,7 @@ Future<int> init(CounterStorage cs) async {
       */
       print("internet not found");
       try {
-        if(await InitCaches('food') == 0){
+        if (await InitCaches('food') == 0) {
           throw 'data not found';
         }
         final String? fooddata = await ReadCaches('food');
@@ -117,18 +119,21 @@ Future<int> init(CounterStorage cs) async {
   }
 }
 
-Future<int?> InitCaches(var k) async{
+Future<int?> InitCaches(var k) async {
   int CacheResult = 0;
   CacheManagerUtils.conditionalCache(
       key: k,
       valueType: ValueType.StringValue,
-      actionIfNull: (){CacheResult = 0;},
-      actionIfNotNull: (){CacheResult = 1;});
-  return  CacheResult;
+      actionIfNull: () {
+        CacheResult = 0;
+      },
+      actionIfNotNull: () {
+        CacheResult = 1;
+      });
+  return CacheResult;
 }
 
-
-Future<String?> WriteCaches(var k, var st) async{
+Future<String?> WriteCaches(var k, var st) async {
   WriteCache.setString(key: k, value: st);
 }
 

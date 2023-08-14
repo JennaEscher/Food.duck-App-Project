@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'back/data_fetch.dart';
 
- _checkDataFetch() {
+_checkDataFetch() {
   CounterStorage storage = CounterStorage();
   var t = init(storage);
   print(t);
