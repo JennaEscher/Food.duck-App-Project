@@ -44,82 +44,92 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(30),
-        child: SingleChildScrollView(
-          //34픽셀 오버플로우 때문(키보드올라오는것과 관련)
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 120,
-              ),
-              Image.asset(
-                'assets/images/icon.png',
-                height: 100,
-                width: 100,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Image.asset(
-                'assets/images/logo.jpg', //협의수정필요
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Column(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Container(),
+            ),
+            Expanded(
+              flex: 5,
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SearchPage()),
-                      );
-                    },
-                    child: Container(
-                      //검색창 (실시간 반영,제안:onChanged()/TextField)
-                      height: 45,
-                      width: 320,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            color: Colors.amber,
-                            width: 3,
-                          ),
-                          borderRadius: BorderRadius.circular(50)),
-                      child: const SizedBox(
-                        height: 35,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            IconButton(
-                              icon: Icon(
-                                Icons.search,
-                                size: 20,
-                                color: Colors.black,
+                  Image.asset(
+                    'assets/images/icon.png',
+                    height: 100,
+                    width: 100,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Image.asset(
+                    'assets/images/logo.jpg', //협의수정필요
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SearchPage()),
+                          );
+                        },
+                        child: Container(
+                          //검색창 (실시간 반영,제안:onChanged()/TextField)
+                          height: 45,
+                          width: 320,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(
+                                color: Colors.amber,
+                                width: 3,
                               ),
-                              onPressed: null,
+                              borderRadius: BorderRadius.circular(50)),
+                          child: const SizedBox(
+                            height: 35,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.search,
+                                    size: 20,
+                                    color: Colors.black,
+                                  ),
+                                  onPressed: null,
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
+                    "I’m Feeling Hungry",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'NanumSquareB.ttf', //협의수정필요
+                        fontWeight: FontWeight.normal),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                "I’m Feeling Hungry",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'NanumSquareB.ttf', //협의수정필요
-                    fontWeight: FontWeight.normal),
-              ),
-            ],
-          ),
+            ),
+            Expanded(
+              flex: 4,
+              child: Container(),
+            ),
+          ],
         ),
       ),
     );
