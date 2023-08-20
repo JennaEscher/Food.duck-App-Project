@@ -18,6 +18,9 @@ Map tag = {};
 List<int> listmeta = [];
 List<String> tags = [];
 List<String> categorys = [];
+List<String> recentSearches = []; //최근검색어 리스트
+List<int> liked = [];
+
 
 Future<int> makelist(var parsed_list) async {
   int idx = 0;
@@ -46,16 +49,30 @@ Future<int> makelist(var parsed_list) async {
         tag[j].add(idx);
       }
     }
-    if (await InitCaches(i["name"]) == 0) {
-      WriteCaches(i["name"], '0');
+    var tmp = await ReadCaches(i["name"]);
+    if(tmp!.length == 0){
+      WriteCaches(i["name"],'0');
+    }else{
+      if(tmp == '1') liked.add(idx);
+      print("asdfasdf $tmp");
     }
+    print(await ReadCaches(i["name"]));
+    print(i["name"]);
+
     idx++;
   }
+  print("즐찾 $liked");
   return 0;
 }
 
 Future<int> init(CounterStorage cs) async {
+  print(recentSearches.length);
   bool result = await InternetConnection().hasInternetAccess;
+  var cache = await ReadCaches('recentSearches');// recentSearches 초기화
+  if(cache!.length >0  ) {
+    recentSearches = cache.split('\n');
+  }
+  print(recentSearches.length);
   if (result == true) {
     print("Internet Connected");
     try {

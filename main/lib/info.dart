@@ -50,7 +50,7 @@ class Info extends StatelessWidget {
       body: SafeArea(
         child: ListView(
           children: [
-            const TitleSection("Info"),
+            const titleSection("Info"),
             mainSection,
           ],
         ),

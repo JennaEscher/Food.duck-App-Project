@@ -1,29 +1,46 @@
 import 'package:flutter/material.dart';
 import 'drawer.dart';
 import 'widget.dart'; //appBar
+import 'back/data_fetch.dart';
 
-class Result extends StatelessWidget {
-  Result({super.key});
 
+class resultlist extends StatefulWidget {
+  final Idx;
+  const resultlist(this.Idx);
+
+  @override
+  Result createState() => Result();
+}
+
+
+
+class Result extends State<resultlist> {
+  var Index;
+
+  void initState() {
+    Index = widget.Idx;
+    super.initState();
+  }
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     //스트링 예시 리스트에서 각 변수로 넣으면 동작함
-    String storeName = "또솥";
-    String menu = "인간사료 - 한솥";
-    String position = "서강고등학교";
+    String storeName = listfood[Index]["name"];
+    String menu = listfood[Index]["category"];
+    String position = listfood[Index]["address"];
     String pricelevel = "1,000,000원 대";
-    String description = "사각형 안의 사각형 안의 사각형 안의 사각형이 있소 열 두명의 아해가 두렵다고 그러오";
-    String? storeimage;
-    String? tagstring;
+    String description = listfood[Index]["OneLiner"];
+    String? storeimage = listfood[Index]["image"];
+    String? tagstring; //= listfood[Index]["tags"];
 
     tagstring = "#임의태그 #예시태그";
-    storeimage = 'assets/images/sample.png'; //가게 이미지 경로 어떻게 넘어오는지 몰라서 일단 이렇게
+    //storeimage = 'assets/images/sample.png'; //가게 이미지 경로 어떻게 넘어오는지 몰라서 일단 이렇게
 
     const String letterstyle = 'NanumSquareB.ttf';
 
     return Scaffold(
+
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: CustomAppBar(scaffoldKey: scaffoldKey),
@@ -54,13 +71,30 @@ class Result extends StatelessWidget {
                             fontFamily: letterstyle,
                             fontWeight: FontWeight.bold)),
                     IconButton(
-                      icon: const Icon(
-                        Icons.star,
-                        color: Color.fromRGBO(220, 220, 220, 1),
-                        size: 50,
+                      icon: Icon(
+                        liked.contains(Index) ? Icons.star : Icons.star_border,
+                        color: liked.contains(Index) ? Colors.yellow : null,
+                        semanticLabel: liked.contains(Index) ? 'Remove from saved' : 'Save',
+                        size: 35,
                       ),
-                      onPressed: () {
-                        //좋아요 표시 작동
+                      onPressed: ()async{
+                        print(liked);
+                        int flag = 0;
+                        if (liked.contains(Index)) {
+                          flag = 1;
+                          await WriteCaches(listfood[Index]["name"], '0');
+                        } else {
+                          flag = 0;
+                          await WriteCaches(listfood[Index]["name"], '1');
+                        }
+                        setState((){
+                          if (flag == 1) {
+                            liked.remove(Index);
+                          } else {
+                            liked.add(Index);
+                          }
+                        });
+                        print(liked);
                       },
                     ),
                   ],
@@ -84,7 +118,7 @@ class Result extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(30),
                           child: Image.asset(
-                            storeimage,
+                            storeimage!,
                           ),
                         ),
                       ),

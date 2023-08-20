@@ -4,6 +4,8 @@ import 'search_page.dart';
 import 'info.dart';
 import 'rand_condition.dart';
 import 'result.dart';
+import 'result_page.dart';
+import 'back/data_fetch.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -92,7 +94,13 @@ class CustomDrawer extends StatelessWidget {
                     fontFamily: 'NanumSquareB.ttf',
                   ),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => searchList(liked,"검색 결과")),
+                  );
+                },
               ),
               const SizedBox(height: 20),
               ListTile(
@@ -122,10 +130,11 @@ class CustomDrawer extends StatelessWidget {
                   onTap: () {
                     // 여기에 이미지가 눌렸을 때 다른 페이지로 이동하는 코드를 작성합니다.
                     // 예를 들면:
+                    /*
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => Result()),
-                    );
+                    );*/
                   },
                   child: Image.asset(
                     'assets/images/icon.png',

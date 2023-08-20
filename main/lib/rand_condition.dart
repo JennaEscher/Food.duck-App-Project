@@ -102,7 +102,7 @@ class RandCondition extends StatelessWidget {
       body: SafeArea(
         child: ListView(
           children: [
-            const TitleSection("랜덤 추천"),
+            const titleSection("랜덤 추천"),
             mainSection,
           ],
         ),

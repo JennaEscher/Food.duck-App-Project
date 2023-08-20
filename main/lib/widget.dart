@@ -78,10 +78,8 @@ class SubText extends StatelessWidget {
     );
   }
 }
-
-class IconSection extends StatelessWidget {
-  //앱바 사용시 불필요
-  const IconSection({super.key});
+class iconSection extends StatelessWidget {
+  const iconSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -95,16 +93,16 @@ class IconSection extends StatelessWidget {
             width: 55.0,
             fit: BoxFit.cover,
           ),
-          const Icon(Icons.menu, color: Colors.black, size: 45.0),
+          Icon(Icons.menu, color: Colors.black, size: 45.0),
         ],
       ),
     );
   }
 }
 
-class TitleSection extends StatelessWidget {
+class titleSection extends StatelessWidget {
   final String title;
-  const TitleSection(this.title, {super.key});
+  const titleSection(this.title);
 
   @override
   Widget build(BuildContext context) {
@@ -115,10 +113,11 @@ class TitleSection extends StatelessWidget {
         children: [
           Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
                 fontSize: 36,
                 fontFamily: "NanumSquare_ac",
-                fontWeight: FontWeight.w600),
+                fontWeight: FontWeight.w600
+            ),
           ),
         ],
       ),
