@@ -16,7 +16,7 @@ class SearchPageState extends State<SearchPage> {
 
   @override
   void dispose() {
-    _searchController.removeListener(() {});
+    WriteCaches('recentSearches', recentSearches.join('\n'));
     _searchController.dispose();
     super.dispose();
   }
@@ -71,19 +71,7 @@ class SearchPageState extends State<SearchPage> {
     isSelectedCate =
         List.generate(categorys.length, (index) => false); // isSelectedCate 초기화
     resultlist = [];
-    // _searchController.addListener(() {
-    //   final String text = _searchController.text;
-    //   _searchController.value = _searchController.value.copyWith(
-    //     text: text,
-    //     selection: TextSelection(
-    //       baseOffset: text.length,
-    //       extentOffset: text.length,
-    //     ),
-    //     composing: TextRange.empty,
-    //   );
-    // });
   }
-
 
   void _submitSearch() async {
     // 검색어 리스트가 5개 이상이면 가장 오래된 검색어 삭제
@@ -109,10 +97,8 @@ class SearchPageState extends State<SearchPage> {
 
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => searchList(resultlist,"검색 결과")),
+      MaterialPageRoute(builder: (context) => searchList(resultlist, "검색 결과")),
     );
-
   }
 
   void clickRecentSearches() {
@@ -122,8 +108,7 @@ class SearchPageState extends State<SearchPage> {
 
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => searchList(resultlist,"검색 결과")),
+      MaterialPageRoute(builder: (context) => searchList(resultlist, "검색 결과")),
     );
     //클릭한 최근검색어, 빈 태그리스트, 최근검색어리스트를 다른 페이지로 넘기기
   }
@@ -156,8 +141,7 @@ class SearchPageState extends State<SearchPage> {
     List<String> list = tag_check(tags, cate);
     late List<String> terms;
     print("리스트 $list");
-    if(text.isNotEmpty)
-    {
+    if (text.isNotEmpty) {
       RegExp regExp = getRegExp(
           text,
           RegExpOptions(
@@ -170,12 +154,12 @@ class SearchPageState extends State<SearchPage> {
           ));
       print(regExp);
       terms = list.where((element) => regExp.hasMatch(element)).toList();
-    }else{
+    } else {
       terms = list;
     }
     print(terms);
     List<int> tmp = [];
-    for(var i in terms){
+    for (var i in terms) {
       tmp.add(name[i]);
     }
     print("idx $tmp");
@@ -335,7 +319,7 @@ class SearchPageState extends State<SearchPage> {
                 ),
               ),
               Row(
-                //검색어 확인용, 지울 부분
+                  //검색어 확인용, 지울 부분
                   children: [Text('검색어: $searchText')]),
               const SizedBox(
                 height: 30,

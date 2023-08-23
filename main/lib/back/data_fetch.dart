@@ -21,7 +21,6 @@ List<String> categorys = [];
 List<String> recentSearches = []; //최근검색어 리스트
 List<int> liked = [];
 
-
 Future<int> makelist(var parsed_list) async {
   int idx = 0;
   for (var i in parsed_list) {
@@ -50,10 +49,10 @@ Future<int> makelist(var parsed_list) async {
       }
     }
     var tmp = await ReadCaches(i["name"]);
-    if(tmp!.length == 0){
-      WriteCaches(i["name"],'0');
-    }else{
-      if(tmp == '1') liked.add(idx);
+    if (tmp!.length == 0) {
+      WriteCaches(i["name"], '0');
+    } else {
+      if (tmp == '1') liked.add(idx);
       print("asdfasdf $tmp");
     }
     print(await ReadCaches(i["name"]));
@@ -68,11 +67,18 @@ Future<int> makelist(var parsed_list) async {
 Future<int> init(CounterStorage cs) async {
   print(recentSearches.length);
   bool result = await InternetConnection().hasInternetAccess;
-  var cache = await ReadCaches('recentSearches');// recentSearches 초기화
-  if(cache!.length >0  ) {
+  var cache_status = await InitCaches('recentSearches');
+  print("cache : ${cache_status}");
+  var cache = await ReadCaches('recentSearches'); // recentSearches 초기화
+  if (cache!.isNotEmpty) {
     recentSearches = cache.split('\n');
+  } else {
+    recentSearches = [];
   }
   print(recentSearches.length);
+  recentSearches.forEach((element) {
+    print(element);
+  });
   if (result == true) {
     print("Internet Connected");
     try {
@@ -102,8 +108,6 @@ Future<int> init(CounterStorage cs) async {
         print("{$e}");
         // Handle any errors.
       }
-
-      InitCaches('recentSearches');
 
       return 0;
     } catch (e) {
@@ -143,6 +147,7 @@ Future<int?> InitCaches(var k) async {
       valueType: ValueType.StringValue,
       actionIfNull: () {
         CacheResult = 0;
+        recentSearches = [];
       },
       actionIfNotNull: () {
         CacheResult = 1;
@@ -158,6 +163,7 @@ Future<String?> ReadCaches(var k) async {
   dynamic DasData = '';
   var DasValue = await ReadCache.getString(key: k);
   DasData = DasValue.toString();
+  if (DasData == 'null') DasData = '';
   return DasData;
 }
 

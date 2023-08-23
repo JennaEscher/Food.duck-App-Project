@@ -1,6 +1,6 @@
 PODS:
   - connectivity_plus (0.0.1):
-    - FlutterMacOS
+    - Flutter
     - ReachabilitySwift
   - Firebase/CoreOnly (10.12.0):
     - FirebaseCore (= 10.12.0)
@@ -8,13 +8,12 @@ PODS:
     - Firebase/CoreOnly
     - FirebaseStorage (~> 10.12.0)
   - firebase_core (2.15.1):
-    - Firebase/CoreOnly (~> 10.12.0)
-    - FlutterMacOS
+    - Firebase/CoreOnly (= 10.12.0)
+    - Flutter
   - firebase_storage (11.2.6):
-    - Firebase/CoreOnly (~> 10.12.0)
-    - Firebase/Storage (~> 10.12.0)
+    - Firebase/Storage (= 10.12.0)
     - firebase_core
-    - FlutterMacOS
+    - Flutter
   - FirebaseAppCheckInterop (10.12.0)
   - FirebaseAuthInterop (10.12.0)
   - FirebaseCore (10.12.0):
@@ -31,7 +30,7 @@ PODS:
     - FirebaseCore (~> 10.0)
     - FirebaseCoreExtension (~> 10.0)
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
-  - FlutterMacOS (1.0.0)
+  - Flutter (1.0.0)
   - GoogleUtilities/Environment (7.11.1):
     - PromisesObjC (< 3.0, >= 1.2)
   - GoogleUtilities/Logger (7.11.1):
@@ -48,12 +47,12 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
-  - connectivity_plus (from `Flutter/ephemeral/.symlinks/plugins/connectivity_plus/macos`)
-  - firebase_core (from `Flutter/ephemeral/.symlinks/plugins/firebase_core/macos`)
-  - firebase_storage (from `Flutter/ephemeral/.symlinks/plugins/firebase_storage/macos`)
-  - FlutterMacOS (from `Flutter/ephemeral`)
-  - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
-  - shared_preferences_foundation (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/darwin`)
+  - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
+  - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
+  - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
+  - Flutter (from `Flutter`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
 
 SPEC REPOS:
   trunk:
@@ -71,30 +70,30 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   connectivity_plus:
-    :path: Flutter/ephemeral/.symlinks/plugins/connectivity_plus/macos
+    :path: ".symlinks/plugins/connectivity_plus/ios"
   firebase_core:
-    :path: Flutter/ephemeral/.symlinks/plugins/firebase_core/macos
+    :path: ".symlinks/plugins/firebase_core/ios"
   firebase_storage:
-    :path: Flutter/ephemeral/.symlinks/plugins/firebase_storage/macos
-  FlutterMacOS:
-    :path: Flutter/ephemeral
+    :path: ".symlinks/plugins/firebase_storage/ios"
+  Flutter:
+    :path: Flutter
   path_provider_foundation:
-    :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
   shared_preferences_foundation:
-    :path: Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/darwin
+    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
 
 SPEC CHECKSUMS:
-  connectivity_plus: 18d3c32514c886e046de60e9c13895109866c747
+  connectivity_plus: 07c49e96d7fc92bc9920617b83238c4d178b446a
   Firebase: 07150e75d142fb9399f6777fa56a187b17f833a0
-  firebase_core: 559d892df9267acc6b7254d46fb3041866777509
-  firebase_storage: 4f443b2df424a573efff23672eca20b91f0e6def
+  firebase_core: 4a3246a02f828a01c74a2c26427037786d90f17f
+  firebase_storage: 90a6038e00d3903c7f665dcfc57a9a98c7c8366b
   FirebaseAppCheckInterop: f95a4feb9089867aff1a4bdc2ce309137e07736a
   FirebaseAuthInterop: 047153f3c2928822032190aa5194e332670a0d66
   FirebaseCore: f86a1394906b97ac445ae49c92552a9425831bed
   FirebaseCoreExtension: 0ce5ac36042001cfa233ce7bfa28e5c313cf80f4
   FirebaseCoreInternal: 950500ad8a08963657f6d8c67b579740c06d6aa1
   FirebaseStorage: 1d7ca8c8953fc61ccacaa7c612696b5402968a0d
-  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
   GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
@@ -102,6 +101,6 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
 
-PODFILE CHECKSUM: 236401fc2c932af29a9fcf0e97baeeb2d750d367
+PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
 
 COCOAPODS: 1.12.1

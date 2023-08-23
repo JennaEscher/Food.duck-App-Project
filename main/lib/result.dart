@@ -3,7 +3,6 @@ import 'drawer.dart';
 import 'widget.dart'; //appBar
 import 'back/data_fetch.dart';
 
-
 class resultlist extends StatefulWidget {
   final Idx;
   const resultlist(this.Idx);
@@ -12,8 +11,6 @@ class resultlist extends StatefulWidget {
   Result createState() => Result();
 }
 
-
-
 class Result extends State<resultlist> {
   var Index;
 
@@ -21,6 +18,7 @@ class Result extends State<resultlist> {
     Index = widget.Idx;
     super.initState();
   }
+
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -40,7 +38,6 @@ class Result extends State<resultlist> {
     const String letterstyle = 'NanumSquareB.ttf';
 
     return Scaffold(
-
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: CustomAppBar(scaffoldKey: scaffoldKey),
@@ -74,10 +71,12 @@ class Result extends State<resultlist> {
                       icon: Icon(
                         liked.contains(Index) ? Icons.star : Icons.star_border,
                         color: liked.contains(Index) ? Colors.yellow : null,
-                        semanticLabel: liked.contains(Index) ? 'Remove from saved' : 'Save',
+                        semanticLabel: liked.contains(Index)
+                            ? 'Remove from saved'
+                            : 'Save',
                         size: 35,
                       ),
-                      onPressed: ()async{
+                      onPressed: () async {
                         print(liked);
                         int flag = 0;
                         if (liked.contains(Index)) {
@@ -87,7 +86,7 @@ class Result extends State<resultlist> {
                           flag = 0;
                           await WriteCaches(listfood[Index]["name"], '1');
                         }
-                        setState((){
+                        setState(() {
                           if (flag == 1) {
                             liked.remove(Index);
                           } else {
@@ -117,7 +116,7 @@ class Result extends State<resultlist> {
 
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(30),
-                          child: Image.asset(
+                          child: Image.network(
                             storeimage!,
                           ),
                         ),
