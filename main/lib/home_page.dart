@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
               child: Container(),
             ),
             Expanded(
-              flex: 5,
+              flex: 7,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -66,6 +66,7 @@ class HomePage extends StatelessWidget {
                   ),
                   Image.asset(
                     'assets/images/logo.jpg', //협의수정필요
+                    width: 320,
                   ),
                   const SizedBox(
                     height: 20,
