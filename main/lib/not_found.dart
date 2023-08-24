@@ -60,7 +60,7 @@ class NotFound extends StatelessWidget {
       body: SafeArea(
         child: ListView(
           children: [
-            const TitleSection("검색 결과"),
+            const titleSection("검색 결과"),
             NoResultText("! 검색 결과가 없습니다 !"),
           ],
         ),

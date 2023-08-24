@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'back/data_fetch.dart';
 import 'package:korea_regexp/korea_regexp.dart';
 import 'result_page.dart';
+import 'not_found.dart';
 
 //입력: 태그리스트, 최근검색어리스트, 출력://검색어, 태그리스트, 최근검색어리스트
 class SearchPage extends StatefulWidget {
@@ -94,11 +95,17 @@ class SearchPageState extends State<SearchPage> {
 
     changeSearchTerm(searchText, selectedTags, selectedCates);
     //검색어, 태그리스트, 최근검색어리스트를 다른 페이지로 넘기기
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => searchList(resultlist, "검색 결과")),
-    );
+    if(resultlist.isEmpty){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => NotFound()),
+      );
+    }else{
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => searchList(resultlist, "검색 결과")),
+      );
+    }
   }
 
   void clickRecentSearches() {
@@ -106,10 +113,17 @@ class SearchPageState extends State<SearchPage> {
     changeSearchTerm(searchText, [], []);
     //검색어, 태그리스트, 최근검색어리스트를 다른 페이지로 넘기기
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => searchList(resultlist, "검색 결과")),
-    );
+    if(resultlist.isEmpty){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => NotFound()),
+      );
+    }else{
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => searchList(resultlist, "검색 결과")),
+      );
+    }
     //클릭한 최근검색어, 빈 태그리스트, 최근검색어리스트를 다른 페이지로 넘기기
   }
 
@@ -289,6 +303,20 @@ class SearchPageState extends State<SearchPage> {
                       ),
                     ),
                 ],
+              ),
+              const SizedBox(height: 20),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.close,
+                    color: Colors.black,
+                    size: 30,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
               ),
               const SizedBox(
                 height: 30,

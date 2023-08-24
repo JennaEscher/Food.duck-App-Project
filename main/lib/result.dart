@@ -27,12 +27,12 @@ class Result extends State<resultlist> {
     String storeName = listfood[Index]["name"];
     String menu = listfood[Index]["category"];
     String position = listfood[Index]["address"];
-    String pricelevel = "1,000,000원 대";
+    // String pricelevel = "1,000,000원 대";
     String description = listfood[Index]["OneLiner"];
     String? storeimage = listfood[Index]["image"];
-    String? tagstring; //= listfood[Index]["tags"];
+    List<dynamic> foodtag= List.generate(listfood[Index]["tags"].length, (index) => '#${listfood[Index]["tags"][index]}');
+    String? tagstring = foodtag.join(" ");
 
-    tagstring = "#임의태그 #예시태그";
     //storeimage = 'assets/images/sample.png'; //가게 이미지 경로 어떻게 넘어오는지 몰라서 일단 이렇게
 
     const String letterstyle = 'NanumSquareB.ttf';
@@ -124,7 +124,7 @@ class Result extends State<resultlist> {
                       Container(
                         alignment: Alignment.topLeft,
                         margin: const EdgeInsets.symmetric(horizontal: 30),
-                        child: Text(tagstring,
+                        child: Text(tagstring!,
                             textAlign: TextAlign.justify,
                             style: const TextStyle(
                                 fontSize: 20 - 4,
@@ -172,27 +172,27 @@ class Result extends State<resultlist> {
                                   fontSize: 20,
                                   fontFamily: letterstyle,
                                   color: Color.fromRGBO(0, 0, 0, 1))),
-                          const TextSpan(
-                              text: '\n',
-                              style: TextStyle(
-                                fontSize: 5,
-                                fontFamily: letterstyle,
-                                color: Color.fromRGBO(0, 0, 0, 1),
-                              )),
-                          const TextSpan(
-                            text: "가격대: ",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontFamily: letterstyle,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromRGBO(0, 0, 0, 1)),
-                          ),
-                          TextSpan(
-                              text: '$pricelevel\n',
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: letterstyle,
-                                  color: Color.fromRGBO(0, 0, 0, 1)))
+                          // const TextSpan(
+                          //     text: '\n',
+                          //     style: TextStyle(
+                          //       fontSize: 5,
+                          //       fontFamily: letterstyle,
+                          //       color: Color.fromRGBO(0, 0, 0, 1),
+                          //     )),
+                          // const TextSpan(
+                          //   text: "가격대: ",
+                          //   style: TextStyle(
+                          //       fontSize: 20,
+                          //       fontFamily: letterstyle,
+                          //       fontWeight: FontWeight.bold,
+                          //       color: Color.fromRGBO(0, 0, 0, 1)),
+                          // ),
+                          // TextSpan(
+                          //     text: '$pricelevel\n',
+                          //     style: const TextStyle(
+                          //         fontSize: 20,
+                          //         fontFamily: letterstyle,
+                          //         color: Color.fromRGBO(0, 0, 0, 1)))
                         ])),
                       ),
                       Container(

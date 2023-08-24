@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'back/data_fetch.dart';
 import 'widget.dart';
 import 'drawer.dart';
 import 'result.dart';
 import 'dart:math';
-
 
 class DropdownChoice extends StatefulWidget {
   List<String> list;
@@ -222,7 +222,7 @@ class _RandConditionState extends State<RandCondition> {
           onPressed: () {
             //without tag
 
-            var rand = Random().nextInt(listfood.length-1);
+            var rand = Random().nextInt(listfood.length);
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -257,13 +257,25 @@ class _RandConditionState extends State<RandCondition> {
 
           tmp.removeWhere((item) => !category[dropdownValue].contains(item));
           tmp.removeWhere((item) => !trav_time[initialSliderValue].contains(item));
-
-          var rand = Random().nextInt(tmp.length-1);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => resultlist(tmp[rand])),
-          );
+          print(tmp);
+          if(tmp.length > 0) {
+            var rand = Random().nextInt(tmp.length);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => resultlist(tmp[rand])),
+            );
+          }else{
+            Fluttertoast.showToast(
+                msg: "검색결과가 없습니다",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0
+            );
+          }
         },
         child: const Text("선택 완료"),
       ),
