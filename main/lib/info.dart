@@ -22,7 +22,7 @@ class Info extends StatelessWidget {
 
     Widget mainSection = Container(
       margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-      height: 590,
+      height: MediaQuery.of(context).size.height - 200,
       decoration: BoxDecoration(
         color: Colors.grey[200],
         borderRadius: BorderRadius.circular(30),
