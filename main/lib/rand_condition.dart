@@ -1,6 +1,61 @@
 import 'package:flutter/material.dart';
+import 'back/data_fetch.dart';
 import 'widget.dart';
 import 'drawer.dart';
+
+
+class DropdownChoice extends StatefulWidget {
+  List<String> list;
+  DropdownChoice(this.list, {super.key});
+
+  @override
+  State<DropdownChoice> createState() => _DropdownChoiceState();
+}
+
+class _DropdownChoiceState extends State<DropdownChoice> {
+  String dropdownValue = categorys[0];
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 320.0,
+      height: 40.0,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(width: 2, color: Colors.amber),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: ButtonTheme(
+          alignedDropdown: true,
+          child: DropdownButton(
+            value: dropdownValue,
+            icon: const Icon(Icons.keyboard_arrow_down),
+            elevation: 10,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 18,
+              fontFamily: "NanumSquare_ac",
+              fontWeight: FontWeight.w400,
+            ),
+            onChanged: (String? value) {
+              setState(() {
+                dropdownValue = value!;
+              });
+            },
+            items: widget.list.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 
 class RandCondition extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -14,40 +69,28 @@ class RandCondition extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SubText("1. 위치 선택", "음식점까지의 이동 범위를 설정할 수 있어요."),
-          SizedBox(height: 15),
+          SizedBox(height: 20),
           LocationSlider(),
-          SizedBox(height: 15),
+          SizedBox(height: 20),
         ],
       ),
     );
 
     Widget textSection2 = Container(
       padding: const EdgeInsets.fromLTRB(22, 10, 22, 15),
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SubText("2. 메뉴 선택", "원하시는 메뉴를 선택할 수 있어요."),
-          SizedBox(height: 20),
-          DropdownChoice(listMenu),
-          SizedBox(height: 15),
+          const SubText("2. 메뉴 선택", "원하시는 메뉴를 선택할 수 있어요."),
+          const SizedBox(height: 20),
+          DropdownChoice(categorys),
+          const SizedBox(height: 20),
         ],
       ),
     );
 
-    Widget textSection3 = Container(
-      padding: const EdgeInsets.fromLTRB(22, 10, 22, 15),
-      child: const Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SubText("3. 가격대 선택", "희망하시는 가격대를 선택할 수 있어요."),
-          SizedBox(height: 20),
-          DropdownChoice(listCost),
-          SizedBox(height: 20),
-        ],
-      ),
-    );
 
-    Widget buttonSection = Column(
+    Widget randombutton = Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         ElevatedButton(
@@ -63,15 +106,17 @@ class RandCondition extends StatelessWidget {
             elevation: 0.0,
             fixedSize: const Size(310, 50),
           ),
-          onPressed: () {},
+          onPressed: () {
+
+          },
           child: const Text("선택 완료"),
         ),
       ],
     );
 
-    Widget mainSection = Container(
+    Widget resultbutton = Container(
       margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-      height: 590,
+      height: 550,
       decoration: BoxDecoration(
         color: Colors.grey[200],
         borderRadius: BorderRadius.circular(30),
@@ -79,13 +124,39 @@ class RandCondition extends StatelessWidget {
       ),
       child: Column(
         children: [
+          SizedBox(height: 30),
+          randombutton,
           textSection1,
           textSection2,
-          textSection3,
-          buttonSection,
+          randombutton,
         ],
       ),
     );
+
+
+    Widget mainSection = Container(
+      margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+      height: 550,
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(color: Colors.transparent),
+      ),
+      child: Column(
+        children: [
+          const SizedBox(height: 30),
+          randombutton,
+          textSection1,
+          textSection2,
+          resultbutton,
+        ],
+      ),
+    );
+
+
+
+
+
 
     return Scaffold(
       key: scaffoldKey,

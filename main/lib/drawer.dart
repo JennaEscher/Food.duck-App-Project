@@ -98,7 +98,7 @@ class CustomDrawer extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => searchList(liked,"검색 결과")),
+                        builder: (context) => searchList(liked,"즐겨찾기")),
                   );
                 },
               ),

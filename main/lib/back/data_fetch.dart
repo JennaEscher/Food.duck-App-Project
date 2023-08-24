@@ -17,7 +17,7 @@ Map trav_time = {};
 Map tag = {};
 List<int> listmeta = [];
 List<String> tags = [];
-List<String> categorys = [];
+List<String> categorys = <String> [];
 List<String> recentSearches = []; //최근검색어 리스트
 List<int> liked = [];
 

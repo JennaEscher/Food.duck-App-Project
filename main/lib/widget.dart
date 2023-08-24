@@ -42,6 +42,10 @@ String getDetails(time) {
   return result;
 }
 
+
+
+
+
 class SubText extends StatelessWidget {
   final String title;
   final String details;
@@ -185,58 +189,6 @@ class _LocationSliderState extends State<LocationSlider> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class DropdownChoice extends StatefulWidget {
-  final List<String> list;
-  const DropdownChoice(this.list, {super.key});
-
-  @override
-  State<DropdownChoice> createState() => _DropdownChoiceState();
-}
-
-class _DropdownChoiceState extends State<DropdownChoice> {
-  String dropdownValue = "선택하세요.";
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 320.0,
-      height: 40.0,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(width: 2, color: Colors.amber),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: ButtonTheme(
-          alignedDropdown: true,
-          child: DropdownButton(
-            value: dropdownValue,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            elevation: 10,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 18,
-              fontFamily: "NanumSquare_ac",
-              fontWeight: FontWeight.w400,
-            ),
-            onChanged: (String? value) {
-              setState(() {
-                dropdownValue = value!;
-              });
-            },
-            items: widget.list.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-          ),
-        ),
       ),
     );
   }
