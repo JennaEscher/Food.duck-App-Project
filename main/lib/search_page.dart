@@ -180,7 +180,7 @@ class SearchPageState extends State<SearchPage> {
             Container(
               //검색창
               height: 45,
-              width: 330,
+              width: MediaQuery.of(context).size.width -40,
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(
@@ -233,6 +233,66 @@ class SearchPageState extends State<SearchPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  children: [
+                    Text(
+                      '최근 검색',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontFamily: 'NanumSquareB.ttf',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ListView(
+                shrinkWrap: true, // ListView 크기를 내용에 맞게 조절
+                children: [
+                  for (int i = 0; i < recentSearches.length && i < 5; i++)
+                    Container(
+                      height: 35,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  searchText = recentSearches[i];
+                                });
+                                clickRecentSearches();
+                              },
+                              child: Text(
+                                recentSearches[i],
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.close,
+                              size: 15,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              _removeSearchKeyword(recentSearches[i]);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Column(
@@ -316,83 +376,6 @@ class SearchPageState extends State<SearchPage> {
                         child: Text(tag),
                       ),
                   ],
-                ),
-              ),
-              Row(
-                  //검색어 확인용, 지울 부분
-                  children: [Text('검색어: $searchText')]),
-              const SizedBox(
-                height: 30,
-              ),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Column(
-                  children: [
-                    Text(
-                      '최근 검색',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontFamily: 'NanumSquareB.ttf',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              ListView(
-                shrinkWrap: true, // ListView 크기를 내용에 맞게 조절
-                children: [
-                  for (int i = 0; i < recentSearches.length && i < 5; i++)
-                    Container(
-                      height: 35,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  searchText = recentSearches[i];
-                                });
-                                clickRecentSearches();
-                              },
-                              child: Text(
-                                recentSearches[i],
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                            ),
-                          ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.close,
-                              size: 15,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {
-                              _removeSearchKeyword(recentSearches[i]);
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.close,
-                    color: Colors.black,
-                    size: 30,
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
                 ),
               ),
             ],
