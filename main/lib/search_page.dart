@@ -79,7 +79,9 @@ class SearchPageState extends State<SearchPage> {
     if (recentSearches.length >= 5) {
       recentSearches.removeLast();
     }
-    recentSearches.forEach((element) => print(element));
+    for (var element in recentSearches) {
+      print(element);
+    }
     setState(() {
       searchText = _searchController.text.trim();
       setState(() {
@@ -95,15 +97,16 @@ class SearchPageState extends State<SearchPage> {
 
     changeSearchTerm(searchText, selectedTags, selectedCates);
     //검색어, 태그리스트, 최근검색어리스트를 다른 페이지로 넘기기
-    if(resultlist.isEmpty){
+    if (resultlist.isEmpty) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => NotFound()),
       );
-    }else{
+    } else {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => searchList(resultlist, "검색 결과")),
+        MaterialPageRoute(
+            builder: (context) => searchList(resultlist, "검색 결과")),
       );
     }
   }
@@ -113,15 +116,16 @@ class SearchPageState extends State<SearchPage> {
     changeSearchTerm(searchText, [], []);
     //검색어, 태그리스트, 최근검색어리스트를 다른 페이지로 넘기기
 
-    if(resultlist.isEmpty){
+    if (resultlist.isEmpty) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => NotFound()),
       );
-    }else{
+    } else {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => searchList(resultlist, "검색 결과")),
+        MaterialPageRoute(
+            builder: (context) => searchList(resultlist, "검색 결과")),
       );
     }
     //클릭한 최근검색어, 빈 태그리스트, 최근검색어리스트를 다른 페이지로 넘기기
@@ -191,10 +195,23 @@ class SearchPageState extends State<SearchPage> {
         leading: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                size: 30,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            const SizedBox(
+              width: 5,
+            ),
             Container(
               //검색창
               height: 45,
-              width: MediaQuery.of(context).size.width -40,
+              width: MediaQuery.of(context).size.width - 80,
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(
@@ -238,6 +255,9 @@ class SearchPageState extends State<SearchPage> {
                   ],
                 ),
               ),
+            ),
+            const SizedBox(
+              width: 15,
             ),
           ],
         ),
@@ -303,20 +323,6 @@ class SearchPageState extends State<SearchPage> {
                       ),
                     ),
                 ],
-              ),
-              const SizedBox(height: 20),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.close,
-                    color: Colors.black,
-                    size: 30,
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
               ),
               const SizedBox(
                 height: 30,
