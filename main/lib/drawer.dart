@@ -3,7 +3,6 @@ import 'home_page.dart';
 import 'search_page.dart';
 import 'info.dart';
 import 'rand_condition.dart';
-import 'result.dart';
 import 'result_page.dart';
 import 'back/data_fetch.dart';
 
@@ -47,10 +46,21 @@ class CustomDrawer extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
+                  //여기부터
+                  Navigator.pop(context);
+                  if(ModalRoute.of(context)!.settings.name!='/'){
+                    Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
+                    MaterialPageRoute(builder: (context) => HomePage()), ((route) => false)
+                    );
+                  }
+                  //여기까지 버그가 날 경우 아래 주석 처리된 코드로 교체하면 될듯
+                  /*
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage()), ((route) => false)
                   );
+                  */
                 },
               ),
               const SizedBox(height: 20),
@@ -63,9 +73,10 @@ class CustomDrawer extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
+                  Navigator.pop(context);
+                  Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => RandCondition()),
+                    MaterialPageRoute(builder: (context) => RandCondition()), ((route) => route.settings.name=='/')
                   );
                 },
               ),
@@ -79,9 +90,10 @@ class CustomDrawer extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
+                  Navigator.pop(context);
+                  Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => const SearchPage()),
+                    MaterialPageRoute(builder: (context) => const SearchPage()), ((route) => route.settings.name=='/')
                   );
                 },
               ),
@@ -95,10 +107,10 @@ class CustomDrawer extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
+                  Navigator.pop(context);
+                  Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => searchList(liked,"즐겨찾기")),
+                    MaterialPageRoute(builder: (context) => searchList(liked,"즐겨찾기")), ((route) => route.settings.name=='/')
                   );
                 },
               ),
@@ -109,9 +121,10 @@ class CustomDrawer extends StatelessWidget {
                   style: TextStyle(fontSize: 30),
                 ),
                 onTap: () {
-                  Navigator.push(
+                  Navigator.pop(context);
+                  Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => Info()),
+                    MaterialPageRoute(builder: (context) => Info()), ((route) => route.settings.name=='/')
                   );
                 },
               ),
