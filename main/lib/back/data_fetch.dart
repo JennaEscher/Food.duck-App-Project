@@ -53,14 +53,10 @@ Future<int> makelist(var parsed_list) async {
       WriteCaches(i["name"], '0');
     } else {
       if (tmp == '1') liked.add(idx);
-      print("asdfasdf $tmp");
     }
-    print(await ReadCaches(i["name"]));
-    print(i["name"]);
 
     idx++;
   }
-  print("즐찾 $liked");
   return 0;
 }
 

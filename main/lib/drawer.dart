@@ -95,6 +95,7 @@ class CustomDrawer extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
+                  Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -109,6 +110,7 @@ class CustomDrawer extends StatelessWidget {
                   style: TextStyle(fontSize: 30),
                 ),
                 onTap: () {
+                  Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => Info()),

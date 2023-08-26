@@ -13,9 +13,28 @@ class resultlist extends StatefulWidget {
 
 class Result extends State<resultlist> {
   var Index;
+  late String storeName;
+  late String menu;
+  late String position;
+  // String pricelevel = "1,000,000원 대";
+  late String description;
+  late String? storeimage ;
+  late List<dynamic> foodtag;
+  late String? tagstring;
+  late Image img;
 
   void initState() {
     Index = widget.Idx;
+    storeName = listfood[Index]["name"];
+    menu = listfood[Index]["category"];
+    position = listfood[Index]["address"];
+    description = listfood[Index]["OneLiner"];
+    storeimage = listfood[Index]["image"];
+    foodtag= List.generate(listfood[Index]["tags"].length, (index) => '#${listfood[Index]["tags"][index]}');
+    tagstring = foodtag.join(" ");
+    img = Image.network(
+      storeimage!,
+    );
     super.initState();
   }
 
@@ -24,14 +43,7 @@ class Result extends State<resultlist> {
   @override
   Widget build(BuildContext context) {
     //스트링 예시 리스트에서 각 변수로 넣으면 동작함
-    String storeName = listfood[Index]["name"];
-    String menu = listfood[Index]["category"];
-    String position = listfood[Index]["address"];
-    // String pricelevel = "1,000,000원 대";
-    String description = listfood[Index]["OneLiner"];
-    String? storeimage = listfood[Index]["image"];
-    List<dynamic> foodtag= List.generate(listfood[Index]["tags"].length, (index) => '#${listfood[Index]["tags"][index]}');
-    String? tagstring = foodtag.join(" ");
+
 
     //storeimage = 'assets/images/sample.png'; //가게 이미지 경로 어떻게 넘어오는지 몰라서 일단 이렇게
 
@@ -116,9 +128,7 @@ class Result extends State<resultlist> {
 
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(30),
-                          child: Image.network(
-                            storeimage!,
-                          ),
+                          child: img,
                         ),
                       ),
                       Container(
