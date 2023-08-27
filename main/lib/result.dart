@@ -18,7 +18,7 @@ class Result extends State<resultlist> {
   late String position;
   // String pricelevel = "1,000,000원 대";
   late String description;
-  late String? storeimage ;
+  late String? storeimage;
   late List<dynamic> foodtag;
   late String? tagstring;
   late Image img;
@@ -30,7 +30,8 @@ class Result extends State<resultlist> {
     position = listfood[Index]["address"];
     description = listfood[Index]["OneLiner"];
     storeimage = listfood[Index]["image"];
-    foodtag= List.generate(listfood[Index]["tags"].length, (index) => '#${listfood[Index]["tags"][index]}');
+    foodtag = List.generate(listfood[Index]["tags"].length,
+        (index) => '#${listfood[Index]["tags"][index]}');
     tagstring = foodtag.join(" ");
     img = Image.network(
       storeimage!,
@@ -43,7 +44,6 @@ class Result extends State<resultlist> {
   @override
   Widget build(BuildContext context) {
     //스트링 예시 리스트에서 각 변수로 넣으면 동작함
-
 
     //storeimage = 'assets/images/sample.png'; //가게 이미지 경로 어떻게 넘어오는지 몰라서 일단 이렇게
 
@@ -68,8 +68,7 @@ class Result extends State<resultlist> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              FittedBox(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
