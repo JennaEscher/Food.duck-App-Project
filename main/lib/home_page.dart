@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'drawer.dart';
 import 'search_page.dart';
-import 'loading.dart';
+import 'back/data_fetch.dart';
+import 'dart:async';
+
+
+bool isloaded = false;
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,18 +16,58 @@ class HomePage extends StatefulWidget {
 }
 class _HomePage extends State<HomePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  late bool loaded;
+  var check;
 
   @override
   void initState(){
     super.initState();
+    setState(() {
+      loaded = isloaded;
+    });
+    if(!loaded){
+      _checkDataFetch().then((value) {
+        setState(() {
+          check = value;
+        });
+        print("check : $check");
+        Timer(Duration(seconds: 3), () {
+          if(check == 0){
+            setState(() {
+              isloaded = true;
+              loaded = true;
+            });
+          }else{
+            SystemNavigator.pop();
+          }
+        });
+      });
+    }
+
   }
+  Future<int> _checkDataFetch() async{
+    CounterStorage storage = CounterStorage();
+    var t = await init(storage);
+    print(t);
+    print("name");
+    name.forEach((key, value) => print('${key} : ${value}'));
+    print("tag");
+    tag.forEach((key, value) => print('${key} : ${value}'));
+    print("category");
+    category.forEach((key, value) => print('${key} : ${value}'));
+    print("trav_time");
+    trav_time.forEach((key, value) => print('${key} : ${value}'));
+    print(tags);
+    print(categorys);
+    return t;
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      // 뒤로가기 버튼을 가로로 막아서 Splash Screen이 다시 표시되지 않도록 함
-      onWillPop: () async => false,
-      child: Scaffold(
+    if(loaded){
+      return Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -147,8 +193,28 @@ class _HomePage extends State<HomePage> {
             ],
           ),
         ),
-      ),
-    );
-
+      );
+    }else{
+      return Scaffold(
+        key: scaffoldKey,
+        backgroundColor: Colors.white,
+        body: Container(
+          alignment: Alignment.center,
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/icon.png',
+                height: MediaQuery.of(context).size.width * 0.4,
+                width: MediaQuery.of(context).size.width * 0.4,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
   }
 }

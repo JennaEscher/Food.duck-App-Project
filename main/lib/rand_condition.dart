@@ -258,7 +258,7 @@ class _RandConditionState extends State<RandCondition> {
           tmp.removeWhere((item) => !category[dropdownValue].contains(item));
           tmp.removeWhere((item) => !trav_time[initialSliderValue].contains(item));
           print(tmp);
-          if(tmp.length > 0) {
+          if(tmp.isNotEmpty) {
             var rand = Random().nextInt(tmp.length);
             Navigator.push(
               context,
