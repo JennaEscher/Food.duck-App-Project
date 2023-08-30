@@ -42,6 +42,7 @@ dependencies:
   korea_regexp: ^1.0.1
   cache_manager: ^1.0.0+4
   fluttertoast: ^8.2.2
+  text_scroll: ^0.2.0
 
 dev_dependencies:
   flutter_test:
