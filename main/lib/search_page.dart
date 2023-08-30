@@ -3,6 +3,7 @@ import 'back/data_fetch.dart';
 import 'package:korea_regexp/korea_regexp.dart';
 import 'result_page.dart';
 import 'not_found.dart';
+import 'widget.dart';
 
 //입력: 태그리스트, 최근검색어리스트, 출력://검색어, 태그리스트, 최근검색어리스트
 class SearchPage extends StatefulWidget {
@@ -263,7 +264,7 @@ class SearchPageState extends State<SearchPage> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 25),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -274,15 +275,16 @@ class SearchPageState extends State<SearchPage> {
                     Text(
                       '최근 검색',
                       style: TextStyle(
-                        fontSize: 25,
-                        fontFamily: 'NanumSquareB.ttf',
+                        fontSize: 32,
+                        fontFamily: "NanumSquare_ac",
+                        fontWeight: FontWeight.w600
                       ),
                     ),
                   ],
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 15,
               ),
               ListView(
                 shrinkWrap: true, // ListView 크기를 내용에 맞게 조절
@@ -334,15 +336,16 @@ class SearchPageState extends State<SearchPage> {
                     Text(
                       '태그 검색',
                       style: TextStyle(
-                        fontSize: 25,
-                        fontFamily: 'NanumSquareB.ttf',
+                        fontSize: 32,
+                        fontFamily: "NanumSquare_ac",
+                        fontWeight: FontWeight.w600
                       ),
                     ),
                   ],
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 15,
               ),
               Align(
                 alignment: Alignment.centerLeft,
@@ -411,6 +414,9 @@ class SearchPageState extends State<SearchPage> {
                       ),
                   ],
                 ),
+              ),
+              const SizedBox(
+                height: 20,
               ),
             ],
           ),
