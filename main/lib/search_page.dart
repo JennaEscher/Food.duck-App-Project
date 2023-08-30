@@ -264,7 +264,7 @@ class SearchPageState extends State<SearchPage> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 25),
+        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 25),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -275,7 +275,7 @@ class SearchPageState extends State<SearchPage> {
                     Text(
                       '최근 검색',
                       style: TextStyle(
-                        fontSize: 32,
+                        fontSize: 28,
                         fontFamily: "NanumSquare_ac",
                         fontWeight: FontWeight.w600
                       ),
@@ -284,7 +284,7 @@ class SearchPageState extends State<SearchPage> {
                 ),
               ),
               const SizedBox(
-                height: 15,
+                height: 18,
               ),
               ListView(
                 shrinkWrap: true, // ListView 크기를 내용에 맞게 조절
@@ -336,7 +336,7 @@ class SearchPageState extends State<SearchPage> {
                     Text(
                       '태그 검색',
                       style: TextStyle(
-                        fontSize: 32,
+                        fontSize: 28,
                         fontFamily: "NanumSquare_ac",
                         fontWeight: FontWeight.w600
                       ),
@@ -345,7 +345,7 @@ class SearchPageState extends State<SearchPage> {
                 ),
               ),
               const SizedBox(
-                height: 15,
+                height: 18,
               ),
               Align(
                 alignment: Alignment.centerLeft,
@@ -373,7 +373,14 @@ class SearchPageState extends State<SearchPage> {
                             isSelectedCate[i] = !isSelectedCate[i];
                             clickCategoryBottons(i);
                           },
-                          child: Text(categorys[i]),
+                          child: Text(
+                            categorys[i],
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: "NanumSquare_ac",
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
                         ),
                       ),
                     for (int i = 0; i < tags.length; i++)
@@ -396,12 +403,20 @@ class SearchPageState extends State<SearchPage> {
                             isSelected[i] = !isSelected[i];
                             clickTagBottons(i);
                           },
-                          child: Text(tags[i]),
+                          child: Text(
+                            tags[i],
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: "NanumSquare_ac",
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
                         ),
                       ),
                   ],
                 ),
               ),
+              /*
               SizedBox(
                 //태그리스트 확인용, 지울 부분
                 child: Row(
@@ -415,6 +430,7 @@ class SearchPageState extends State<SearchPage> {
                   ],
                 ),
               ),
+              */
               const SizedBox(
                 height: 20,
               ),
