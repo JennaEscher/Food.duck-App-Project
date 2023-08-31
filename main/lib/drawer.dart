@@ -41,8 +41,9 @@ class CustomDrawer extends StatelessWidget {
                 title: const Text(
                   '홈',
                   style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: 'NanumSquareB.ttf',
+                    fontSize: 32,
+                    fontFamily: "NanumSquare_ac",
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 onTap: () {
@@ -60,8 +61,9 @@ class CustomDrawer extends StatelessWidget {
                 title: const Text(
                   '랜덤 추천',
                   style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: 'NanumSquareB.ttf',
+                    fontSize: 32,
+                    fontFamily: "NanumSquare_ac",
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 onTap: () {
@@ -76,8 +78,9 @@ class CustomDrawer extends StatelessWidget {
                 title: const Text(
                   '검색',
                   style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: 'NanumSquareB.ttf',
+                    fontSize: 32,
+                    fontFamily: "NanumSquare_ac",
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 onTap: () {
@@ -93,8 +96,9 @@ class CustomDrawer extends StatelessWidget {
                 title: const Text(
                   '즐겨찾기',
                   style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: 'NanumSquareB.ttf',
+                    fontSize: 32,
+                    fontFamily: "NanumSquare_ac",
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 onTap: () {
@@ -109,7 +113,11 @@ class CustomDrawer extends StatelessWidget {
               ListTile(
                 title: const Text(
                   'Info',
-                  style: TextStyle(fontSize: 30),
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontFamily: "NanumSquare_ac",
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 onTap: () {
                   Navigator.pop(context);
