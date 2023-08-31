@@ -23,6 +23,7 @@ class Result extends State<resultlist> {
   late List<dynamic> foodtag;
   late String? tagstring;
   late Image img;
+  late String maplink;
 
   void initState() {
     Index = widget.Idx;
@@ -37,6 +38,7 @@ class Result extends State<resultlist> {
     img = Image.network(
       storeimage!,
     );
+    maplink = listfood[Index]["MapLink"];
     super.initState();
   }
 
