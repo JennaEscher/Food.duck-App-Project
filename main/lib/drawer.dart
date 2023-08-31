@@ -3,7 +3,6 @@ import 'home_page.dart';
 import 'search_page.dart';
 import 'info.dart';
 import 'rand_condition.dart';
-import 'result.dart';
 import 'result_page.dart';
 import 'back/data_fetch.dart';
 

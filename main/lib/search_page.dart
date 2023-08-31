@@ -3,8 +3,6 @@ import 'back/data_fetch.dart';
 import 'package:korea_regexp/korea_regexp.dart';
 import 'result_page.dart';
 import 'not_found.dart';
-import 'widget.dart';
-
 //입력: 태그리스트, 최근검색어리스트, 출력://검색어, 태그리스트, 최근검색어리스트
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);

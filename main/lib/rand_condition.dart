@@ -7,7 +7,7 @@ import 'result.dart';
 import 'dart:math';
 
 class DropdownChoice extends StatefulWidget {
-  List<String> list;
+  final List<String> list;
   DropdownChoice(this.list, {super.key});
 
   @override
@@ -252,7 +252,6 @@ class _RandConditionState extends State<RandCondition> {
         ),
         onPressed: () {
           //with tag
-          List<String> result = [];
           List<int> tmp = Iterable<int>.generate(listfood.length).toList();
 
           if(category.containsKey(dropdownValue)){

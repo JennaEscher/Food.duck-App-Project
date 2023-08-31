@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
@@ -61,20 +60,14 @@ Future<int> makelist(var parsed_list) async {
 }
 
 Future<int> init(CounterStorage cs) async {
-  print(recentSearches.length);
   bool result = await InternetConnection().hasInternetAccess;
   var cache_status = await InitCaches('recentSearches');
-  print("cache : ${cache_status}");
   var cache = await ReadCaches('recentSearches'); // recentSearches 초기화
   if (cache!.isNotEmpty) {
     recentSearches = cache.split('\n');
   } else {
     recentSearches = [];
   }
-  print(recentSearches.length);
-  recentSearches.forEach((element) {
-    print(element);
-  });
   if (result == true) {
     print("Internet Connected");
     try {
@@ -91,13 +84,11 @@ Future<int> init(CounterStorage cs) async {
         const oneMegabyte = 1024 * 1024;
         final data = await datapath.getData(oneMegabyte);
         final String fooddata = utf8.decode(data!);
-        print(fooddata);
 
         await InitCaches('food');
         await WriteCaches('food', fooddata);
 
         listfood = jsonDecode(fooddata);
-        print(listfood);
         await makelist(listfood);
         // Data for "images/island.jpg" is returned, use this as needed.
       } on FirebaseException catch (e) {
@@ -153,6 +144,7 @@ Future<int?> InitCaches(var k) async {
 
 Future<String?> WriteCaches(var k, var st) async {
   WriteCache.setString(key: k, value: st);
+  return '0';
 }
 
 Future<String?> ReadCaches(var k) async {
