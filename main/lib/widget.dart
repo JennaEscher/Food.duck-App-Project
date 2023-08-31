@@ -82,6 +82,46 @@ class SubText extends StatelessWidget {
     );
   }
 }
+class MemText extends StatelessWidget {
+  final String title;
+  final String details;
+  const MemText(this.title, this.details, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 330-30,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(children: [
+            Text(
+            (title),
+            textAlign: TextAlign.start,
+            style: const TextStyle(
+              fontSize: 22-2,
+              fontFamily: "NanumSquare_ac",
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          const SizedBox(width: 10),
+          Text(
+            (details),
+            textAlign: TextAlign.start,
+            style: const TextStyle(
+              fontSize: 18,
+              fontFamily: "NanumSquare_ac",
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+          ],
+        )
+          
+        ],
+      ),
+    );
+  }
+}
 class iconSection extends StatelessWidget {
   const iconSection({super.key});
 
@@ -97,7 +137,7 @@ class iconSection extends StatelessWidget {
             width: 55.0,
             fit: BoxFit.cover,
           ),
-          Icon(Icons.menu, color: Colors.black, size: 45.0),
+          const Icon(Icons.menu, color: Colors.black, size: 45.0),
         ],
       ),
     );
@@ -106,7 +146,7 @@ class iconSection extends StatelessWidget {
 
 class titleSection extends StatelessWidget {
   final String title;
-  const titleSection(this.title);
+  const titleSection(this.title, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +157,7 @@ class titleSection extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 36,
                 fontFamily: "NanumSquare_ac",
                 fontWeight: FontWeight.w600

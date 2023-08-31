@@ -14,11 +14,43 @@ class Info extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SubText("Developers", "SGCC 프로젝트"),
+          SizedBox(height: 10),
+
+          MemText("가나다","야호!!!"),
+          SizedBox(height: 5),
+          MemText("가나다","야호!!!"),
+          SizedBox(height: 5),
+          MemText("가나다","야호!!!"),
+          SizedBox(height: 5),
+          MemText("가나다","야호!!!"),
+          SizedBox(height: 5),
+          MemText("가나다","야호!!!"),
+          SizedBox(height: 5),
+          MemText("가나다","야호!!!"),
           SizedBox(height: 15),
+
+
+          SubText("소속", "서강대학교 SGCC 동아리"),
+          SizedBox(height: 7),
           SubText("Contacts", "foodduck.app@gmail.com"),
+          SizedBox(height: 7),
+          Text("어플리케이션이 비정상적인 행동을 취할 경우 위 연락처로 알려주세요",textAlign: TextAlign.start,
+            style: TextStyle(
+              fontSize: 18,
+              fontFamily: "NanumSquare_ac",
+              fontWeight: FontWeight.w300,
+            ),),
+          SizedBox(height: 15),
+          MemText("제작기간","2023/7/ - 2023/8/31"),
+          SizedBox(height: 10),
+          MemText("","ver1.0"),
+          
         ],
       ),
     );
+
+    
+    
 
     Widget mainSection = Container(
       margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
