@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:text_scroll/text_scroll.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'drawer.dart';
 import 'widget.dart'; //appBar
 import 'back/data_fetch.dart';
@@ -33,7 +34,7 @@ class Result extends State<resultlist> {
     description = listfood[Index]["OneLiner"];
     storeimage = listfood[Index]["image"];
     foodtag = List.generate(listfood[Index]["tags"].length,
-        (index) => '#${listfood[Index]["tags"][index]}');
+            (index) => '#${listfood[Index]["tags"][index]}');
     tagstring = foodtag.join(" ");
     img = Image.network(
       storeimage!,
@@ -44,14 +45,19 @@ class Result extends State<resultlist> {
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
+  _launchURL() async {
+    Uri _url = Uri.parse(maplink);
+    if (await launchUrl(_url)) {
+      await launchUrl(_url);
+    } else {
+      throw 'Could not launch $_url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    const String letterstyle = 'NanumSquareB.ttf';
-
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Colors.white,
       appBar: CustomAppBar(scaffoldKey: scaffoldKey),
       endDrawer: const SafeArea(
         child: Drawer(
@@ -69,6 +75,7 @@ class Result extends State<resultlist> {
           child: Column(
             children: [
               Container(
+                padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -91,7 +98,7 @@ class Result extends State<resultlist> {
                     IconButton(
                       icon: Icon(
                         liked.contains(Index) ? Icons.star : Icons.star_border,
-                        color: liked.contains(Index) ? Colors.yellow : null,
+                        color: liked.contains(Index) ? Colors.amberAccent : null,
                         semanticLabel: liked.contains(Index)
                             ? 'Remove from saved'
                             : 'Save',
@@ -118,7 +125,7 @@ class Result extends State<resultlist> {
                   ],
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 15),
               Container(
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
@@ -143,19 +150,20 @@ class Result extends State<resultlist> {
                         tagstring!,
                         textAlign: TextAlign.justify,
                         style: const TextStyle(
-                            fontSize: 16,
-                            fontFamily: "NanumSquare_ac",
-                            fontWeight: FontWeight.w400,
-                            color: Colors.grey,
+                          fontSize: 16,
+                          fontFamily: "NanumSquare_ac",
+                          fontWeight: FontWeight.w400,
+                          color: Colors.grey,
                         ),
                       ),
                     ),
                     Container(
-                      alignment: Alignment.topLeft,
-                      margin: const EdgeInsets.fromLTRB(23, 10, 23, 0),
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.all(0),
+                      margin: const EdgeInsets.fromLTRB(23, 10, 23, 5),
                       child: RichText(
                         text: TextSpan(
-                            children: <TextSpan>[
+                            children: [
                               const TextSpan(
                                   text: "메뉴: ",
                                   style: TextStyle(
@@ -187,7 +195,7 @@ class Result extends State<resultlist> {
                                   )
                               ),
                               TextSpan(
-                                  text: '$position\n',
+                                  text: '$position',
                                   style: const TextStyle(
                                     fontSize: 20,
                                     fontFamily: "NanumSquare_ac",
@@ -195,8 +203,23 @@ class Result extends State<resultlist> {
                                     color: Colors.black,
                                     height: 1.5,
                                   )
-                              )
+                              ),
                             ]
+                        ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: _launchURL,
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.redAccent.shade200, // Text Color
+                      ),
+                      child: const Text(
+                        '식당 위치 지도로 보기',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: "NanumSquare_ac",
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.underline,
                         ),
                       ),
                     ),
@@ -207,9 +230,8 @@ class Result extends State<resultlist> {
                       ),
                       alignment: Alignment.center,
                       width: double.infinity,
-                      height: 120,
-                      margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                      margin: const EdgeInsets.fromLTRB(20, 8, 20, 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                       child: Text(
                         description,
                         textAlign: TextAlign.center,

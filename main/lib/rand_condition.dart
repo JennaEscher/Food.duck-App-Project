@@ -290,8 +290,9 @@ class _RandConditionState extends State<RandCondition> {
   );
 
     Widget mainSection = Container(
-      margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-      height: MediaQuery.of(context).size.height - 200,
+      margin: const EdgeInsets.symmetric(vertical: 3, horizontal: 20),
+      alignment: Alignment.center,
+      height: MediaQuery.of(context).size.height - 280,
       decoration: BoxDecoration(
         color: Colors.grey[200],
         borderRadius: BorderRadius.circular(30),
@@ -300,12 +301,13 @@ class _RandConditionState extends State<RandCondition> {
       child: FittedBox(
         child : Column(
           children: [
-            const SizedBox(height: 30),
             randombutton,
+            const SizedBox(height: 15),
             textSection1,
+            const SizedBox(height: 5),
             textSection2,
+            const SizedBox(height: 15),
             resultbutton,
-            const SizedBox(height: 30)
           ],
         )
       ),
