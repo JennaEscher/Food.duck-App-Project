@@ -292,7 +292,7 @@ class _RandConditionState extends State<RandCondition> {
     Widget mainSection = Container(
       margin: const EdgeInsets.symmetric(vertical: 3, horizontal: 20),
       alignment: Alignment.center,
-      height: MediaQuery.of(context).size.height - 280,
+      height: MediaQuery.of(context).size.height - 250,
       decoration: BoxDecoration(
         color: Colors.grey[200],
         borderRadius: BorderRadius.circular(30),
