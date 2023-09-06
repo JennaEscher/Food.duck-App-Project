@@ -4,10 +4,10 @@ import 'drawer.dart';
 import 'search_page.dart';
 import 'back/data_fetch.dart';
 import 'dart:async';
-
+import 'result.dart';
+import 'dart:math';
 
 bool isloaded = false;
-
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -174,14 +174,28 @@ class _HomePage extends State<HomePage> {
                       ],
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 5,
                     ),
-                    const Text(
-                      "I’m Feeling Hungry",
-                      style: TextStyle(
+                    TextButton(
+                      onPressed: () {
+                        var rand = Random().nextInt(listfood.length);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => resultlist(rand)),
+                        );
+                      },
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.black, // Text Color
+                      ),
+                      child: const Text(
+                        "I'm Feeling Hungry",
+                        style: TextStyle(
                           fontSize: 20,
-                          fontFamily: 'NanumSquareB.ttf', //협의수정필요
-                          fontWeight: FontWeight.normal),
+                          fontFamily: "NanumSquare_ac",
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
                     ),
                   ],
                 ),
