@@ -13,16 +13,20 @@ List<dynamic> listfood = [];
 Map name = {};
 Map category = {};
 Map trav_time = {};
+Map price = {};
+Map place = {};
 Map tag = {};
 List<int> listmeta = [];
 List<String> tags = [];
-List<String> categorys = <String> [];
+List<String> categorys = <String>[];
 List<String> recentSearches = []; //최근검색어 리스트
 List<int> liked = [];
 
-Future<int> makelist(var parsed_list) async {
+
+Future<int> makelist(var parsedList) async {
   int idx = 0;
-  for (var i in parsed_list) {
+  liked = [];
+  for (var i in parsedList) {
     name[i["name"]] = idx;
     if (category.containsKey(i["category"])) {
       category[i["category"]].add(idx);
@@ -38,8 +42,33 @@ Future<int> makelist(var parsed_list) async {
       trav_time[i["trav_time"]] = <int>[];
       trav_time[i["trav_time"]].add(idx);
     }
+
+    if(i["avg_Price"] != 0){
+      var pp = ((i["avg_Price"])/10000).toInt();
+      if (price.containsKey(pp)) {
+        price[pp].add(idx);
+      } else {
+        price[pp] = <int>[];
+        price[pp].add(idx);
+      }
+    }else{
+      for(int i = 0; i< 4 ;i++){
+        if(!price.containsKey(i)) {
+          price[i] = <int>[];
+        }
+        price[i].add(idx);
+      }
+    }
+
+
+    if (place.containsKey(i["place"])) {
+      place[i["place"]].add(idx);
+    } else {
+      place[i["place"]] = <int>[];
+      place[i["place"]].add(idx);
+    }
+
     for (var j in i["tags"]) {
-      if (!tags.contains(j)) tags.add(j);
       if (tag.containsKey(j)) {
         tag[j].add(idx);
       } else {
@@ -48,10 +77,10 @@ Future<int> makelist(var parsed_list) async {
       }
     }
     var tmp = await ReadCaches(i["name"]);
-    if (tmp!.length == 0) {
+    if (tmp!.isEmpty) {
       WriteCaches(i["name"], '0');
     } else {
-      if (tmp == '1') liked.add(idx);
+      if (tmp == '1' && !liked.contains(idx)) liked.add(idx);
     }
 
     idx++;
@@ -61,7 +90,7 @@ Future<int> makelist(var parsed_list) async {
 
 Future<int> init(CounterStorage cs) async {
   bool result = await InternetConnection().hasInternetAccess;
-  var cache_status = await InitCaches('recentSearches');
+  var cacheStatus = await InitCaches('recentSearches');
   var cache = await ReadCaches('recentSearches'); // recentSearches 초기화
   if (cache!.isNotEmpty) {
     recentSearches = cache.split('\n');
@@ -79,7 +108,7 @@ Future<int> init(CounterStorage cs) async {
       );
       print("Firebase Initialized");
       final datapath = FirebaseStorage.instance
-          .refFromURL("gs://foodduck-23ca8.appspot.com/output.json");
+          .refFromURL("gs://foodduck-23ca8.appspot.com/food_jason.json");
       try {
         const oneMegabyte = 1024 * 1024;
         final data = await datapath.getData(oneMegabyte);
@@ -90,16 +119,17 @@ Future<int> init(CounterStorage cs) async {
 
         listfood = jsonDecode(fooddata);
         await makelist(listfood);
+        print(tag);
         // Data for "images/island.jpg" is returned, use this as needed.
       } on FirebaseException catch (e) {
-        print("{$e}");
+        print("fetch error {$e}");
         // Handle any errors.
       }
 
       return 0;
     } catch (e) {
       //로컬 파일이 없어서 생기는 오류(PathNotFoundException).
-      print("Error : $e");
+      print("Erroree : $e");
       return -1;
     }
   } else {
@@ -144,7 +174,7 @@ Future<int?> InitCaches(var k) async {
 
 Future<String?> WriteCaches(var k, var st) async {
   WriteCache.setString(key: k, value: st);
-  return '0';
+  return null;
 }
 
 Future<String?> ReadCaches(var k) async {

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:project2307/result_with.dart';
 import 'drawer.dart';
 import 'back/data_fetch.dart';
 import 'widget.dart';
-import 'result.dart';
-
 
 class searchList extends StatefulWidget {
-  final List<int> listIndex;
+  final List<dynamic> listIndex;
   final String titleString;
-  const searchList(this.listIndex,this.titleString);
+  const searchList(this.listIndex, this.titleString, {super.key});
 
   @override
   _searchListState createState() => _searchListState();
@@ -18,13 +17,13 @@ class _searchListState extends State<searchList> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   var names = <String>[];
   var descriptions = <String>[];
-  var targetIndex = <int>[];
+  var targetIndex = <dynamic>[];
   var selectedName = <String>[];
   var selectedDesc = <String>[];
 
   @override
   void initState() {
-    targetIndex = widget.listIndex;
+    targetIndex = widget.listIndex.toSet().toList();
     /*
     if (targetIndex.isEmpty) {
       selectedName = names;
@@ -47,48 +46,54 @@ class _searchListState extends State<searchList> {
 
   Widget _resultList() {
     return ListView.separated(
-      itemCount: targetIndex.length+2,
+      itemCount: targetIndex.length + 2,
       itemBuilder: (context, index) {
         if (index == 0) {
           return titleSection(widget.titleString);
-        }
-        else if (index == targetIndex.length + 1) {
+        } else if (index == targetIndex.length + 1) {
           return Container();
-        }
-        else {
+        } else {
           return ListTile(
-            title: Text(listfood[targetIndex[index-1]]["name"]),
-            subtitle: Text(listfood[targetIndex[index-1]]["OneLiner"]),
+            title: Text(listfood[targetIndex[index - 1]]["name"]),
+            subtitle: Text(listfood[targetIndex[index - 1]]["OneLiner"]),
             contentPadding: const EdgeInsets.symmetric(horizontal: 30),
-            onTap: (){
+            onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => resultlist(targetIndex[index-1])),
+                    builder: (context) => resultlist_with(targetIndex[index - 1],null)),
               );
             },
             trailing: IconButton(
+              padding: EdgeInsets.zero,
               icon: Icon(
-                liked.contains(targetIndex[index-1]) ? Icons.star : Icons.star_border,
-                color: liked.contains(targetIndex[index-1]) ? Colors.yellow : null,
-                semanticLabel: liked.contains(targetIndex[index-1]) ? 'Remove from saved' : 'Save',
+                liked.contains(targetIndex[index - 1])
+                    ? Icons.star
+                    : Icons.star_border,
+                color: liked.contains(targetIndex[index - 1])
+                    ? Colors.yellow
+                    : null,
+                semanticLabel: liked.contains(targetIndex[index - 1])
+                    ? 'Remove from saved'
+                    : 'Save',
                 size: 35,
               ),
               onPressed: ()async{
-                print(liked);
                 int flag = 0;
-                if (liked.contains(targetIndex[index-1])) {
+                if (liked.contains(targetIndex[index - 1])) {
                   flag = 1;
-                  await WriteCaches(listfood[targetIndex[index-1]]["name"], '0');
+                  await WriteCaches(
+                      listfood[targetIndex[index - 1]]["name"], '0');
                 } else {
                   flag = 0;
-                  await WriteCaches(listfood[targetIndex[index-1]]["name"], '1');
+                  await WriteCaches(
+                      listfood[targetIndex[index - 1]]["name"], '1');
                 }
-                setState((){
+                setState(() {
                   if (flag == 1) {
-                    liked.remove(targetIndex[index-1]);
+                    liked.remove(targetIndex[index - 1]);
                   } else {
-                    liked.add(targetIndex[index-1]);
+                    liked.add(targetIndex[index - 1]);
                   }
                 });
                 print(liked);
@@ -98,7 +103,11 @@ class _searchListState extends State<searchList> {
         }
       },
       separatorBuilder: (context, index) {
-        return const Divider(thickness: 1.5, indent: 20, endIndent: 20,);
+        return const Divider(
+          thickness: 1.5,
+          indent: 20,
+          endIndent: 20,
+        );
       },
       scrollDirection: Axis.vertical,
       shrinkWrap: true,

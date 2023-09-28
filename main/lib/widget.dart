@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:project2307/home_page.dart';
 
 const List<String> sliderValIndicators = ["5분", "10분", "20분", "30분", "30분 이상"];
+const List<String> PricesliderValIndicators = ["1만원 이하", "1만원대", "2만원대", "3만원대 이상"];
 const List<String> listMenu = <String>[
   "선택하세요.",
   "랜덤",
@@ -44,8 +46,6 @@ String getDetails(time) {
 
 
 
-
-
 class SubText extends StatelessWidget {
   final String title;
   final String details;
@@ -82,46 +82,43 @@ class SubText extends StatelessWidget {
     );
   }
 }
-class MemText extends StatelessWidget {
+
+class SubText2 extends StatelessWidget {
   final String title;
   final String details;
-  const MemText(this.title, this.details, {super.key});
+  const SubText2(this.title, this.details, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 330-30,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(children: [
-            Text(
-            (title),
-            textAlign: TextAlign.start,
+          Text(
+            title,
+            textAlign: TextAlign.center,
             style: const TextStyle(
-              fontSize: 22-2,
+              fontSize: 22,
               fontFamily: "NanumSquare_ac",
               fontWeight: FontWeight.w400,
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(height: 7),
           Text(
-            (details),
-            textAlign: TextAlign.start,
+            details,
+            textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 18,
               fontFamily: "NanumSquare_ac",
-              fontWeight: FontWeight.w300,
+              fontWeight: FontWeight.w200,
             ),
           ),
-          ],
-        )
-          
         ],
       ),
     );
   }
 }
+
 class iconSection extends StatelessWidget {
   const iconSection({super.key});
 
@@ -160,8 +157,7 @@ class titleSection extends StatelessWidget {
             style: const TextStyle(
                 fontSize: 36,
                 fontFamily: "NanumSquare_ac",
-                fontWeight: FontWeight.w600
-            ),
+                fontWeight: FontWeight.w600),
           ),
         ],
       ),
@@ -248,10 +244,39 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       toolbarHeight: 60,
       backgroundColor: Colors.transparent,
       elevation: 0,
+      leadingWidth: 120,
       leading: Padding(
-        padding: const EdgeInsets.only(left: 20.0),
-        child: Image.asset(
-          'assets/images/icon.png',
+        padding: const EdgeInsets.only(left: 10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            IconButton(
+              padding: EdgeInsets.zero,
+              icon: const Icon(
+                Icons.arrow_back, // 뒤로가기 아이콘
+                color: Colors.black, // 아이콘 색상 (흰색)
+                size: 40,
+              ),
+              onPressed: () {
+                Navigator.pop(context); // 뒤로가기 기능 추가
+              },
+            ),
+            const SizedBox(width: 15),
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomePage()),
+                );
+              },
+              child: Image.asset(
+                'assets/images/icon.png',
+                height: 40,
+                width: 40,
+              ),
+            ),
+          ],
         ),
       ),
       actions: [
@@ -262,6 +287,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: Padding(
             padding: const EdgeInsets.only(right: 20.0),
             child: IconButton(
+              padding: EdgeInsets.zero,
               icon: const Icon(
                 Icons.menu,
                 color: Colors.black,
