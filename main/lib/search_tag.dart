@@ -33,19 +33,11 @@ class SearchPageState extends State<SearchTag> {
       }
       tmpcate = tmpcate.toSet().toList();
 
-      if(tmpprice.isNotEmpty) {
-        targetIndex = [...tmpprice];
-      }else{
-        targetIndex = List<int>.generate(listfood.length, (i) => i);
-      }
-      if(tmpplace.isNotEmpty){
-        targetIndex.removeWhere(
-                (item) => !tmpplace.contains(item));
-      }
-      if(tmpcate.isNotEmpty){
-        targetIndex.removeWhere(
-                (item) => !tmpcate.contains(item));
-      }
+      targetIndex = [];
+      targetIndex.addAll(tmpprice);
+      targetIndex.addAll(tmpplace);
+      targetIndex.addAll(tmpcate);
+      targetIndex.toSet().toList();
     });
   }
 
@@ -63,8 +55,7 @@ class SearchPageState extends State<SearchTag> {
     isSelectedPrices = List.generate(prices.length, (index) => false); // isSelectedPrices 초기화
     isSelectedCate = List.generate(categorys.length, (index) => false); // isSelectedCate 초기화
     isSelectedPlaces = List.generate(places.length, (index) => false); // isSelectedCate 초기화
-    targetIndex = List<int>.generate(listfood.length, (i) => i);
-    print(targetIndex);
+    targetIndex = [];
   }
 
   @override
