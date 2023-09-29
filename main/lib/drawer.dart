@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'search_page.dart';
+import 'search_tag.dart';
 import 'info.dart';
 import 'rand_condition.dart';
 import 'result_page.dart';
 import 'back/data_fetch.dart';
+import 'search_recent.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -44,8 +46,9 @@ class CustomDrawer extends StatelessWidget {
                       title: const Text(
                         '홈',
                         style: TextStyle(
-                          fontSize: 30,
-                          fontFamily: 'NanumSquareB.ttf',
+                          fontSize: 25,
+                          fontFamily: 'NanumSquare_ac',
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       onTap: () {
@@ -59,13 +62,14 @@ class CustomDrawer extends StatelessWidget {
                         }
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
                     ListTile(
                       title: const Text(
                         '랜덤 추천',
                         style: TextStyle(
-                          fontSize: 30,
-                          fontFamily: 'NanumSquareB.ttf',
+                          fontSize: 25,
+                          fontFamily: 'NanumSquare_ac',
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       onTap: () {
@@ -76,13 +80,14 @@ class CustomDrawer extends StatelessWidget {
                         );
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
                     ListTile(
                       title: const Text(
-                        '검색',
+                        '태그 검색',
                         style: TextStyle(
-                          fontSize: 30,
-                          fontFamily: 'NanumSquareB.ttf',
+                          fontSize: 25,
+                          fontFamily: 'NanumSquare_ac',
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       onTap: () {
@@ -90,17 +95,37 @@ class CustomDrawer extends StatelessWidget {
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const SearchPage()),
+                                builder: (context) => const SearchTag()),
                             ((route) => route.settings.name == '/'));
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
+                    ListTile(
+                      title: const Text(
+                        '일반 검색',
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontFamily: 'NanumSquare_ac',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SearchRecent()),
+                            ((route) => route.settings.name == '/'));
+                      },
+                    ),
+                    const SizedBox(height: 15),
                     ListTile(
                       title: const Text(
                         '즐겨찾기',
                         style: TextStyle(
-                          fontSize: 30,
-                          fontFamily: 'NanumSquareB.ttf',
+                          fontSize: 25,
+                          fontFamily: 'NanumSquare_ac',
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       onTap: () {
@@ -113,11 +138,15 @@ class CustomDrawer extends StatelessWidget {
                             ((route) => route.settings.name == '/'));
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
                     ListTile(
                       title: const Text(
                         'Info',
-                        style: TextStyle(fontSize: 30),
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontFamily: 'NanumSquare_ac',
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       onTap: () {
                         Navigator.pop(context);
@@ -140,13 +169,11 @@ class CustomDrawer extends StatelessWidget {
                       padding: const EdgeInsets.all(0),
                       child: InkWell(
                         onTap: () {
-                          // 여기에 이미지가 눌렸을 때 다른 페이지로 이동하는 코드를 작성합니다.
-                          // 예를 들면:
-                          /*
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Result()),
-                          );*/
+                            MaterialPageRoute(
+                                builder: (context) => const SearchPage()),
+                          );
                         },
                         child: Image.asset(
                           'assets/images/icon.png',

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:project2307/result_with.dart';
 import 'loading.dart';
 import 'drawer.dart';
-import 'search_page.dart';
+import 'search_recent.dart';
 import 'back/data_fetch.dart';
 import 'dart:async';
 import 'dart:math';
@@ -66,6 +66,7 @@ class _HomePage extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var screenwidth = MediaQuery.of(context).size.width;
     if (loaded) {
       return Scaffold(
         key: scaffoldKey,
@@ -139,13 +140,13 @@ class _HomePage extends State<HomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const SearchPage()),
+                                  builder: (context) => const SearchRecent()),
                             );
                           },
                           child: Container(
                             //검색창
                             height: 45,
-                            width: MediaQuery.of(context).size.width * 0.4,
+                            width: screenwidth < 600 ? screenwidth - 100 : 500,
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 border: Border.all(
@@ -180,12 +181,14 @@ class _HomePage extends State<HomePage> {
                       onTap: () {
                         // 버튼을 클릭하면 다른 페이지로 이동
                         var rand = Random().nextInt(listfood.length);
-                        List<dynamic> leftlist = List<int>.generate(listfood.length, (i) => i );
+                        List<dynamic> leftlist =
+                            List<int>.generate(listfood.length, (i) => i);
                         leftlist.toSet().toList().remove(rand);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => resultlist_with(rand,leftlist)),
+                              builder: (context) =>
+                                  resultlist_with(rand, leftlist)),
                         );
                       },
                       child: Container(
