@@ -154,7 +154,7 @@ class Result_with extends State<resultlist_with> {
                               width: 40,
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                  color: Colors.grey[300],
+                                  color: Colors.amberAccent,
                                   // border: Border.all(
                                   //   color: const Color.fromARGB(255, 180, 180, 180),
                                   //   width: 1.5,
@@ -517,7 +517,7 @@ class Result_with extends State<resultlist_with> {
                                   width: 150,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
-                                      color: Colors.grey[300],
+                                      color: Colors.amberAccent,
                                       // border: Border.all(
                                       //   color: const Color.fromARGB(255, 180, 180, 180),
                                       //   width: 1.5,
