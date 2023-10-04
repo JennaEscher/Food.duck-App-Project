@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project2307/home_page.dart';
 
 const List<String> sliderValIndicators = ["5분", "10분", "20분", "30분", "30분 이상"];
-const List<String> PricesliderValIndicators = ["1만원 이하", "1만원대", "2만원대", "3만원대 이상"];
+const List<String> PricesliderValIndicators = ["1만원 이하", "2만원 이하", "3만원 이하", "전체 가격대"];
 const List<String> listMenu = <String>[
   "선택하세요.",
   "랜덤",

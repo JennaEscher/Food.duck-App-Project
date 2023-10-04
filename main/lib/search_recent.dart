@@ -78,7 +78,7 @@ class SearchPageState extends State<SearchRecent> {
 
   void _submitSearch() async {
     // 검색어 리스트가 5개 이상이면 가장 오래된 검색어 삭제
-    if (recentSearches.length >= 5) {
+    if (recentSearches.length >= 15) {
       recentSearches.removeLast();
     }
     for (var element in recentSearches) {
@@ -252,7 +252,7 @@ class SearchPageState extends State<SearchRecent> {
                   Container(
                     //검색창
                     height: 45,
-                    width: screenwidth < 600 ? screenwidth - 100 : 500,
+                    width: screenwidth < 600 ? screenwidth - 80 : 520,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(
@@ -304,7 +304,7 @@ class SearchPageState extends State<SearchRecent> {
                   ),
                   SingleChildScrollView(
                     child: SizedBox(
-                      width: screenwidth < 600 ? screenwidth - 100 : 500,
+                      width: screenwidth < 600 ? screenwidth - 80 : 520,
                       child: Column(
                         children: [
                           const Align(
@@ -328,7 +328,7 @@ class SearchPageState extends State<SearchRecent> {
                             shrinkWrap: true, // ListView 크기를 내용에 맞게 조절
                             children: [
                               for (int i = 0;
-                                  i < recentSearches.length && i < 5;
+                                  i < recentSearches.length && i < 8;
                                   i++)
                                 Container(
                                   height: 35,

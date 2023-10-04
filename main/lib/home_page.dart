@@ -146,7 +146,7 @@ class _HomePage extends State<HomePage> {
                           child: Container(
                             //검색창
                             height: 45,
-                            width: screenwidth < 600 ? screenwidth - 100 : 500,
+                            width: screenwidth < 600 ? screenwidth - 80 : 520,
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 border: Border.all(
@@ -196,7 +196,7 @@ class _HomePage extends State<HomePage> {
                         width: 250,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                            color: Colors.grey[300],
+                            //color: Colors.grey[300],
                             // border: Border.all(
                             //   color: const Color.fromARGB(255, 180, 180, 180),
                             //   width: 1.5,
@@ -206,8 +206,8 @@ class _HomePage extends State<HomePage> {
                           "I’m Feeling Hungry",
                           style: TextStyle(
                             fontSize: 20,
-                            fontFamily: 'NanumSquareB.ttf',
-                            fontWeight: FontWeight.normal,
+                            fontFamily: "NanumSquare_ac",
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
                       ),

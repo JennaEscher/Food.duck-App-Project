@@ -3,7 +3,8 @@ import 'package:text_scroll/text_scroll.dart';
 import 'drawer.dart';
 import 'widget.dart'; //appBar
 import 'back/data_fetch.dart';
-import 'package:flutter/services.dart';
+import 'dart:html';
+import 'dart:ui' as ui;
 import 'dart:math';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,7 +13,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 class resultlist_with extends StatefulWidget {
   final Idx;
   final List<dynamic>? leftlist;
-  const resultlist_with(this.Idx,this.leftlist, {super.key});
+  const resultlist_with(this.Idx, this.leftlist, {super.key});
 
   @override
   Result_with createState() => Result_with();
@@ -41,25 +42,27 @@ class Result_with extends State<resultlist_with> {
     menu = listfood[Index]["category"];
     position = listfood[Index]["address"];
     description = listfood[Index]["OneLiner"];
-    if(listfood[Index]["image"] != null){
+    if (listfood[Index]["image"] != null) {
       storeimage = listfood[Index]["image"];
       img = Image.network(
         storeimage!,
       );
-    }else img = Image.network("https://www.pulsecarshalton.co.uk/wp-content/uploads/2016/08/jk-placeholder-image.jpg");
+    } else {
+      img = Image.network("https://www.pulsecarshalton.co.uk/wp-content/uploads/2016/08/jk-placeholder-image.jpg");
+    }
     foodtag = List.generate(listfood[Index]["tags"].length,
         (index) => '#${listfood[Index]["tags"][index]}');
     tagstring = foodtag.join(" ");
     _url = Uri.parse('https://forms.gle/J5nnWwScc6ehhUuQ6');
-    if(listfood[Index]["NaverMap"] != null){
+    if (listfood[Index]["NaverMap"] != null) {
       maplink = Uri.parse(listfood[Index]["NaverMap"]);
-    }else {
+    } else {
       maplink = null;
     }
-    if(widget.leftlist != null){
-      leftlist=widget.leftlist!.toSet().toList();
-    }else{
-      leftlist=widget.leftlist;
+    if (widget.leftlist != null) {
+      leftlist = widget.leftlist!.toSet().toList();
+    } else {
+      leftlist = widget.leftlist;
     }
     times = listfood[Index]["times"];
     super.initState();
@@ -110,9 +113,7 @@ class Result_with extends State<resultlist_with> {
                             const Velocity(pixelsPerSecond: Offset(30, 0)),
                         pauseBetween: const Duration(milliseconds: 1000),
                         mode: TextScrollMode.bouncing,
-                        fadedBorder: true,
-                        fadeBorderVisibility: FadeBorderVisibility.auto,
-                        fadeBorderSide: FadeBorderSide.right,
+                        fadedBorder: false,
                         style: const TextStyle(
                           fontSize: 36,
                           fontFamily: "NanumSquare_ac",
@@ -122,51 +123,50 @@ class Result_with extends State<resultlist_with> {
                     ),
                     Row(
                       children: [
-                        if(leftlist != null)
+                        if (leftlist != null)
                           InkWell(
-                              onTap: () {
-                                // 버튼을 클릭하면 다른 페이지로 이동
-                                if(leftlist!.length>0){
-                                  var rand = leftlist![Random().nextInt(leftlist!.length)];
-                                  leftlist!.remove(rand);
-                                  Navigator.pop(context);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => resultlist_with(rand,leftlist)),
-                                  );
-                                }else{
-                                  Fluttertoast.showToast(
-                                      msg: "남은 음식점이 없습니다.",
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.CENTER,
-                                      timeInSecForIosWeb: 1,
-                                      backgroundColor: Colors.red,
-                                      textColor: Colors.white,
-                                      fontSize: 16.0);
-                                }
-
-                              },
-                              child: Container(
-                                height: 40,
-                                width: 150,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: Colors.grey[300],
-                                    // border: Border.all(
-                                    //   color: const Color.fromARGB(255, 180, 180, 180),
-                                    //   width: 1.5,
-                                    // ),
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: const Text(
-                                  "다시 뽑기",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: 'NanumSquareB.ttf',
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                              )
+                            onTap: () {
+                              // 버튼을 클릭하면 다른 페이지로 이동
+                              if (leftlist!.isNotEmpty) {
+                                var rand = leftlist![
+                                    Random().nextInt(leftlist!.length)];
+                                leftlist!.remove(rand);
+                                Navigator.pop(context);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          resultlist_with(rand, leftlist)),
+                                );
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "남은 음식점이 없습니다.",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              }
+                            },
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[300],
+                                  // border: Border.all(
+                                  //   color: const Color.fromARGB(255, 180, 180, 180),
+                                  //   width: 1.5,
+                                  // ),
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.replay),
+                                ],
+                              ),
+                            ),
                           ),
                         const SizedBox(
                           width: 10,
@@ -177,7 +177,7 @@ class Result_with extends State<resultlist_with> {
                             liked.contains(Index)
                                 ? Icons.star
                                 : Icons.star_border,
-                            color: liked.contains(Index) ? Colors.yellow : null,
+                            color: liked.contains(Index) ? Colors.amberAccent : null,
                             semanticLabel: liked.contains(Index)
                                 ? 'Remove from saved'
                                 : 'Save',
@@ -205,7 +205,7 @@ class Result_with extends State<resultlist_with> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 15),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.grey[200],
@@ -240,114 +240,109 @@ class Result_with extends State<resultlist_with> {
                       ),
                       Container(
                         alignment: Alignment.topLeft,
-                        margin: const EdgeInsets.fromLTRB(23, 10, 23, 0),
+                        padding: const EdgeInsets.all(0),
+                        margin: const EdgeInsets.fromLTRB(23, 10, 23, 5),
                         child: RichText(
-                          text: TextSpan(
-                              children: <TextSpan>[
-                                TextSpan(children: <TextSpan>[
-                                  const TextSpan(
-                                      text: "메뉴: ",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontFamily: "NanumSquare_ac",
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                        height: 1.5,
-                                      )),
-                                  TextSpan(
-                                      text: '$menu\n',
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontFamily: "NanumSquare_ac",
-                                        fontWeight: FontWeight.w200,
-                                        color: Colors.black,
-                                        height: 1.5,
-                                      )),
-                                  const TextSpan(
-                                      text: "위치: ",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontFamily: "NanumSquare_ac",
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                        height: 1.5,
-                                      )),
-                                  TextSpan(
-                                      text: '$position\n',
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontFamily: "NanumSquare_ac",
-                                        fontWeight: FontWeight.w200,
-                                        color: Colors.black,
-                                        height: 1.5,
-                                      ))
-                                ]),
-                                if(times.length == 4)
-                                  TextSpan(
-                                      children : [
-                                        const TextSpan(
-                                            text: "영업 시간: ",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontFamily: "NanumSquare_ac",
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black,
-                                              height: 1.5,
-                                            )),
-                                        TextSpan(
-                                            text: '${times[0]} ~ ${times[3]}\n',
-                                            style: const TextStyle(
-                                              fontSize: 20,
-                                              fontFamily: "NanumSquare_ac",
-                                              fontWeight: FontWeight.w200,
-                                              color: Colors.black,
-                                              height: 1.5,
-                                            )),
-                                        const TextSpan(
-                                            text: "브레이크 타임: ",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontFamily: "NanumSquare_ac",
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black,
-                                              height: 1.5,
-                                            )),
-                                        TextSpan(
-                                            text: '${times[1]} ~ ${times[2]}\n',
-                                            style: const TextStyle(
-                                              fontSize: 20,
-                                              fontFamily: "NanumSquare_ac",
-                                              fontWeight: FontWeight.w200,
-                                              color: Colors.black,
-                                              height: 1.5,
-                                            ))
-                                      ]
-                                  ),
-                                if(times.length == 2)
-                                  TextSpan(
-                                      children : [
-                                        const TextSpan(
-                                            text: "영업 시간: ",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontFamily: "NanumSquare_ac",
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black,
-                                              height: 1.5,
-                                            )),
-                                        TextSpan(
-                                            text: '${times[0]} ~ ${times[1]}\n',
-                                            style: const TextStyle(
-                                              fontSize: 20,
-                                              fontFamily: "NanumSquare_ac",
-                                              fontWeight: FontWeight.w200,
-                                              color: Colors.black,
-                                              height: 1.5,
-                                            ))
-                                      ]
-                                  )
-                              ]
-                          ),
+                          text: TextSpan(children: <TextSpan>[
+                            TextSpan(children: <TextSpan>[
+                              const TextSpan(
+                                  text: "메뉴: ",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontFamily: "NanumSquare_ac",
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                    height: 1.5,
+                                  )),
+                              TextSpan(
+                                  text: '$menu\n',
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontFamily: "NanumSquare_ac",
+                                    fontWeight: FontWeight.w200,
+                                    color: Colors.black,
+                                    height: 1.5,
+                                  )),
+                              const TextSpan(
+                                  text: "위치: ",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontFamily: "NanumSquare_ac",
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                    height: 1.5,
+                                  )),
+                              TextSpan(
+                                  text: '$position\n',
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontFamily: "NanumSquare_ac",
+                                    fontWeight: FontWeight.w200,
+                                    color: Colors.black,
+                                    height: 1.5,
+                                  ))
+                            ]),
+                            if (times.length == 4)
+                              TextSpan(children: [
+                                const TextSpan(
+                                    text: "영업 시간: ",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: "NanumSquare_ac",
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
+                                      height: 1.5,
+                                    )),
+                                TextSpan(
+                                    text: '${times[0]} ~ ${times[3]}\n',
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: "NanumSquare_ac",
+                                      fontWeight: FontWeight.w200,
+                                      color: Colors.black,
+                                      height: 1.5,
+                                    )),
+                                const TextSpan(
+                                    text: "브레이크 타임: ",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: "NanumSquare_ac",
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
+                                      height: 1.5,
+                                    )),
+                                TextSpan(
+                                    text: '${times[1]} ~ ${times[2]}\n',
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: "NanumSquare_ac",
+                                      fontWeight: FontWeight.w200,
+                                      color: Colors.black,
+                                      height: 1.5,
+                                    ))
+                              ]),
+                            if (times.length == 2)
+                              TextSpan(children: [
+                                const TextSpan(
+                                    text: "영업 시간: ",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: "NanumSquare_ac",
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
+                                      height: 1.5,
+                                    )),
+                                TextSpan(
+                                    text: '${times[0]} ~ ${times[1]}\n',
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: "NanumSquare_ac",
+                                      fontWeight: FontWeight.w200,
+                                      color: Colors.black,
+                                      height: 1.5,
+                                    ))
+                              ])
+                          ]),
                         ),
                       ),
                       Container(
@@ -357,10 +352,8 @@ class Result_with extends State<resultlist_with> {
                         ),
                         alignment: Alignment.center,
                         width: double.infinity,
-                        height: 120,
-                        margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 15),
+                        margin: const EdgeInsets.fromLTRB(20, 8, 20, 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                         child: Text(
                           description,
                           textAlign: TextAlign.center,
@@ -373,10 +366,10 @@ class Result_with extends State<resultlist_with> {
                         ),
                       ),
                       TextButton(
-                        onPressed: (){
-                          if(maplink !=null){
-                           _launchUrl(maplink!);
-                          }else{
+                        onPressed: () {
+                          if (maplink != null) {
+                            _launchUrl(maplink!);
+                          } else {
                             Fluttertoast.showToast(
                                 msg: "음식점 링크가 없습니다.",
                                 toastLength: Toast.LENGTH_SHORT,
@@ -401,10 +394,11 @@ class Result_with extends State<resultlist_with> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 20),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             InkWell(
                               onTap: () => _launchUrl(_url),
@@ -481,8 +475,8 @@ class Result_with extends State<resultlist_with> {
                     ),
                     Row(
                       children: [
-                        if(leftlist != null)
-                            Container(
+                        if (leftlist != null)
+                          Container(
                             height: 40,
                             width: 150,
                             alignment: Alignment.center,
@@ -496,16 +490,18 @@ class Result_with extends State<resultlist_with> {
                             child: InkWell(
                                 onTap: () {
                                   // 버튼을 클릭하면 다른 페이지로 이동
-                                  if(leftlist!.length>0){
-                                    var rand = leftlist![Random().nextInt(leftlist!.length)];
+                                  if (leftlist!.isNotEmpty) {
+                                    var rand = leftlist![
+                                        Random().nextInt(leftlist!.length)];
                                     leftlist!.remove(rand);
                                     Navigator.pop(context);
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => resultlist_with(rand,leftlist)),
+                                          builder: (context) =>
+                                              resultlist_with(rand, leftlist)),
                                     );
-                                  }else{
+                                  } else {
                                     Fluttertoast.showToast(
                                         msg: "남은 음식점이 없습니다.",
                                         toastLength: Toast.LENGTH_SHORT,
@@ -515,7 +511,6 @@ class Result_with extends State<resultlist_with> {
                                         textColor: Colors.white,
                                         fontSize: 16.0);
                                   }
-
                                 },
                                 child: Container(
                                   height: 40,
@@ -528,16 +523,27 @@ class Result_with extends State<resultlist_with> {
                                       //   width: 1.5,
                                       // ),
                                       borderRadius: BorderRadius.circular(10)),
-                                  child: const Text(
-                                    "다시 뽑기",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontFamily: 'NanumSquareB.ttf',
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                                  child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.replay),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "다시 뽑기",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontFamily: "NanumSquare_ac",
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                    ],
                                   ),
-                                )
-                            ),
+                                )),
                           ),
                         const SizedBox(
                           width: 10,
@@ -578,259 +584,251 @@ class Result_with extends State<resultlist_with> {
                 ),
                 const SizedBox(height: 12),
                 Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: Colors.transparent),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.45,
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 20),
-                                child: Container(
-                                  alignment: Alignment.topCenter,
-                                  width: double.infinity,
-                                  margin:
-                                      const EdgeInsets.fromLTRB(12, 20, 12, 20),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(30),
-                                    child: img,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.45,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Container(
-                                alignment: Alignment.topLeft,
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 3, horizontal: 23),
-                                child: Text(
-                                  tagstring,
-                                  textAlign: TextAlign.justify,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: "NanumSquare_ac",
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                alignment: Alignment.topLeft,
-                                margin: const EdgeInsets.fromLTRB(23, 10, 23, 0),
-                                child: RichText(
-                                  text: TextSpan(
-                                      children: <TextSpan>[
-                                        TextSpan(children: <TextSpan>[
-                                          const TextSpan(
-                                              text: "메뉴: ",
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                                fontFamily: "NanumSquare_ac",
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.black,
-                                                height: 1.5,
-                                              )),
-                                          TextSpan(
-                                              text: '$menu\n',
-                                              style: const TextStyle(
-                                                fontSize: 20,
-                                                fontFamily: "NanumSquare_ac",
-                                                fontWeight: FontWeight.w200,
-                                                color: Colors.black,
-                                                height: 1.5,
-                                              )),
-                                          const TextSpan(
-                                              text: "위치: ",
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                                fontFamily: "NanumSquare_ac",
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.black,
-                                                height: 1.5,
-                                              )),
-                                          TextSpan(
-                                              text: '$position\n',
-                                              style: const TextStyle(
-                                                fontSize: 20,
-                                                fontFamily: "NanumSquare_ac",
-                                                fontWeight: FontWeight.w200,
-                                                color: Colors.black,
-                                                height: 1.5,
-                                              ))
-                                        ]),
-                                        if(times.length == 4)
-                                          TextSpan(
-                                              children : [
-                                                const TextSpan(
-                                                    text: "영업 시간: ",
-                                                    style: TextStyle(
-                                                      fontSize: 20,
-                                                      fontFamily: "NanumSquare_ac",
-                                                      fontWeight: FontWeight.w600,
-                                                      color: Colors.black,
-                                                      height: 1.5,
-                                                    )),
-                                                TextSpan(
-                                                    text: '${times[0]} ~ ${times[3]}\n',
-                                                    style: const TextStyle(
-                                                      fontSize: 20,
-                                                      fontFamily: "NanumSquare_ac",
-                                                      fontWeight: FontWeight.w200,
-                                                      color: Colors.black,
-                                                      height: 1.5,
-                                                    )),
-                                                const TextSpan(
-                                                    text: "브레이크 타임: ",
-                                                    style: TextStyle(
-                                                      fontSize: 20,
-                                                      fontFamily: "NanumSquare_ac",
-                                                      fontWeight: FontWeight.w600,
-                                                      color: Colors.black,
-                                                      height: 1.5,
-                                                    )),
-                                                TextSpan(
-                                                    text: '${times[1]} ~ ${times[2]}\n',
-                                                    style: const TextStyle(
-                                                      fontSize: 20,
-                                                      fontFamily: "NanumSquare_ac",
-                                                      fontWeight: FontWeight.w200,
-                                                      color: Colors.black,
-                                                      height: 1.5,
-                                                    ))
-                                              ]
-                                          ),
-                                        if(times.length == 2)
-                                          TextSpan(
-                                              children : [
-                                                const TextSpan(
-                                                    text: "영업 시간: ",
-                                                    style: TextStyle(
-                                                      fontSize: 20,
-                                                      fontFamily: "NanumSquare_ac",
-                                                      fontWeight: FontWeight.w600,
-                                                      color: Colors.black,
-                                                      height: 1.5,
-                                                    )),
-                                                TextSpan(
-                                                    text: '${times[0]} ~ ${times[1]}\n',
-                                                    style: const TextStyle(
-                                                      fontSize: 20,
-                                                      fontFamily: "NanumSquare_ac",
-                                                      fontWeight: FontWeight.w200,
-                                                      color: Colors.black,
-                                                      height: 1.5,
-                                                    ))
-                                              ]
-                                          )
-                                      ]
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  color: Colors.white,
-                                ),
-                                alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(color: Colors.transparent),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.45,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              child: Container(
+                                alignment: Alignment.topCenter,
                                 width: double.infinity,
-                                height: 120,
                                 margin:
-                                    const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 15),
-                                child: Text(
-                                  description,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontFamily: "NanumSquare_ac",
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.5,
-                                  ),
+                                    const EdgeInsets.fromLTRB(12, 20, 12, 20),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(30),
+                                  child: img,
                                 ),
                               ),
-                              Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    TextButton(
-                                      onPressed: (){
-                                        if(maplink !=null){
-                                          _launchUrl(maplink!);
-                                        }else{
-                                          Fluttertoast.showToast(
-                                              msg: "음식점 링크가 없습니다.",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.CENTER,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor: Colors.red,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
-                                        }
-                                      },
-                                      style: TextButton.styleFrom(
-                                        foregroundColor:
-                                        Colors.redAccent.shade200, // Text Color
-                                      ),
-                                      child: const Text(
-                                        '식당 위치 지도로 보기',
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.45,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              alignment: Alignment.topLeft,
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 3, horizontal: 23),
+                              child: Text(
+                                tagstring,
+                                textAlign: TextAlign.justify,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: "NanumSquare_ac",
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              alignment: Alignment.topLeft,
+                              margin: const EdgeInsets.fromLTRB(23, 10, 23, 0),
+                              child: RichText(
+                                text: TextSpan(children: <TextSpan>[
+                                  TextSpan(children: <TextSpan>[
+                                    const TextSpan(
+                                        text: "메뉴: ",
                                         style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 20,
                                           fontFamily: "NanumSquare_ac",
                                           fontWeight: FontWeight.w600,
-                                          decoration: TextDecoration.underline,
-                                        ),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () => _launchUrl(_url),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          color: Colors.grey[400],
-                                        ),
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 5),
-                                        child: const Text(
-                                          "관리자에게 제보하기",
-                                          textAlign: TextAlign.center,
+                                          color: Colors.black,
+                                          height: 1.5,
+                                        )),
+                                    TextSpan(
+                                        text: '$menu\n',
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          fontFamily: "NanumSquare_ac",
+                                          fontWeight: FontWeight.w200,
+                                          color: Colors.black,
+                                          height: 1.5,
+                                        )),
+                                    const TextSpan(
+                                        text: "위치: ",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontFamily: "NanumSquare_ac",
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black,
+                                          height: 1.5,
+                                        )),
+                                    TextSpan(
+                                        text: '$position\n',
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          fontFamily: "NanumSquare_ac",
+                                          fontWeight: FontWeight.w200,
+                                          color: Colors.black,
+                                          height: 1.5,
+                                        ))
+                                  ]),
+                                  if (times.length == 4)
+                                    TextSpan(children: [
+                                      const TextSpan(
+                                          text: "영업 시간: ",
                                           style: TextStyle(
-                                            fontSize: 15,
+                                            fontSize: 20,
                                             fontFamily: "NanumSquare_ac",
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black,
+                                            height: 1.5,
+                                          )),
+                                      TextSpan(
+                                          text: '${times[0]} ~ ${times[3]}\n',
+                                          style: const TextStyle(
+                                            fontSize: 20,
+                                            fontFamily: "NanumSquare_ac",
+                                            fontWeight: FontWeight.w200,
+                                            color: Colors.black,
+                                            height: 1.5,
+                                          )),
+                                      const TextSpan(
+                                          text: "브레이크 타임: ",
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontFamily: "NanumSquare_ac",
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black,
+                                            height: 1.5,
+                                          )),
+                                      TextSpan(
+                                          text: '${times[1]} ~ ${times[2]}\n',
+                                          style: const TextStyle(
+                                            fontSize: 20,
+                                            fontFamily: "NanumSquare_ac",
+                                            fontWeight: FontWeight.w200,
+                                            color: Colors.black,
+                                            height: 1.5,
+                                          ))
+                                    ]),
+                                  if (times.length == 2)
+                                    TextSpan(children: [
+                                      const TextSpan(
+                                          text: "영업 시간: ",
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontFamily: "NanumSquare_ac",
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black,
+                                            height: 1.5,
+                                          )),
+                                      TextSpan(
+                                          text: '${times[0]} ~ ${times[1]}\n',
+                                          style: const TextStyle(
+                                            fontSize: 20,
+                                            fontFamily: "NanumSquare_ac",
+                                            fontWeight: FontWeight.w200,
+                                            color: Colors.black,
+                                            height: 1.5,
+                                          ))
+                                    ])
+                                ]),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: Colors.white,
+                              ),
+                              alignment: Alignment.center,
+                              width: double.infinity,
+                              height: 120,
+                              margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 15),
+                              child: Text(
+                                description,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: "NanumSquare_ac",
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.5,
                                 ),
                               ),
-                              const SizedBox(height: 20),
-                            ],
-                          ),
-                        )
-                      ],
-                    ))
+                            ),
+                            Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                      if (maplink != null) {
+                                        _launchUrl(maplink!);
+                                      } else {
+                                        Fluttertoast.showToast(
+                                            msg: "음식점 링크가 없습니다.",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.CENTER,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                      }
+                                    },
+                                    style: TextButton.styleFrom(
+                                      foregroundColor: Colors
+                                          .redAccent.shade200, // Text Color
+                                    ),
+                                    child: const Text(
+                                      '식당 위치 지도로 보기',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: "NanumSquare_ac",
+                                        fontWeight: FontWeight.w600,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () => _launchUrl(_url),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(30),
+                                        color: Colors.grey[400],
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 5),
+                                      child: const Text(
+                                        "관리자에게 제보하기",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontFamily: "NanumSquare_ac",
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
