@@ -56,6 +56,7 @@ class SearchPageState extends State<SearchTag> {
   List<bool> isSelectedPlaces = []; //위치 선택여부 리스트
   List<String> selectedPlaces = []; //선택된 위치 리스트
   List<int> targetIndex = [];
+  List<String> price_tags = ["1만원 이하", "1만원대", "2만원대", "3만원 이상"];
 
   @override
   void initState() {
@@ -361,7 +362,7 @@ class SearchPageState extends State<SearchTag> {
                                                     clickBottons();
                                                   },
                                                   child: Text(
-                                                    PricesliderValIndicators[i],
+                                                    price_tags[i],
                                                     style: const TextStyle(
                                                       fontSize: 16,
                                                       fontFamily:

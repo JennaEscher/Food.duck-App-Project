@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'home_page.dart';
-import 'search_page.dart';
-import 'search_tag.dart';
 import 'info.dart';
 import 'rand_condition.dart';
 import 'result_page.dart';
 import 'back/data_fetch.dart';
 import 'search_recent.dart';
+import 'search_tag.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -168,13 +167,6 @@ class CustomDrawer extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(0),
                       child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SearchPage()),
-                          );
-                        },
                         child: Image.asset(
                           'assets/images/icon.png',
                           height: 50,
