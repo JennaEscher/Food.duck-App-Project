@@ -4,7 +4,7 @@
     <application
         android:label="food.duck"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/foodduck_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"
