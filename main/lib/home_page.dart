@@ -21,6 +21,7 @@ class _HomePage extends State<HomePage> {
   late bool loaded;
   var check;
 
+  //Widget Lifecycle : initState -> build -> dispose
   @override
   void initState() {
     super.initState();
@@ -28,18 +29,21 @@ class _HomePage extends State<HomePage> {
       loaded = isloaded;
     });
     if (!loaded) {
+      //테스트 코드로 추측됨.
       _checkDataFetch().then((value) {
         setState(() {
           check = value;
         });
-        print("check : $check");
+        //3초 대기
         Timer(const Duration(seconds: 3), () {
+          //데이터 가져오기 성공
           if (check == 0) {
             setState(() {
               isloaded = true;
               loaded = true;
             });
           } else {
+            //실패시 앱 종료
             SystemNavigator.pop();
           }
         });
@@ -47,26 +51,17 @@ class _HomePage extends State<HomePage> {
     }
   }
 
+  //2번 실행??
   Future<int> _checkDataFetch() async {
     CounterStorage storage = CounterStorage();
     var t = await init(storage);
-    // print(t);
-    // print("name");
-    // name.forEach((key, value) => print('$key : $value'));
-    // print("tag");
-    // tag.forEach((key, value) => print('$key : $value'));
-    // print("category");
-    // category.forEach((key, value) => print('$key : $value'));
-    // print("trav_time");
-    // trav_time.forEach((key, value) => print('$key : $value'));
-    // print(tags);
-    // print(categorys);
     return t;
   }
 
   @override
   Widget build(BuildContext context) {
     var screenwidth = MediaQuery.of(context).size.width;
+    //데이터가 다 로드되면 화면을 그리고, 그렇지 않으면 로딩 페이지를 그림
     if (loaded) {
       return Scaffold(
         key: scaffoldKey,
@@ -95,6 +90,7 @@ class _HomePage extends State<HomePage> {
             ),
           ],
         ),
+        //위젯 고정
         endDrawer: const SafeArea(
           child: Drawer(
             shape: RoundedRectangleBorder(
@@ -105,6 +101,7 @@ class _HomePage extends State<HomePage> {
             child: CustomDrawer(), // CustomDrawer 위젯 사용
           ),
         ),
+        //UI 오버플로우 방지
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -135,6 +132,7 @@ class _HomePage extends State<HomePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        //검색창
                         InkWell(
                           onTap: () {
                             Navigator.push(
@@ -144,7 +142,6 @@ class _HomePage extends State<HomePage> {
                             );
                           },
                           child: Container(
-                            //검색창
                             height: 45,
                             width: screenwidth < 600 ? screenwidth - 80 : 520,
                             decoration: BoxDecoration(
@@ -177,13 +174,16 @@ class _HomePage extends State<HomePage> {
                     const SizedBox(
                       height: 20,
                     ),
+                    //I'm Feeling Hungry 랜덤 검색
                     InkWell(
                       onTap: () {
                         // 버튼을 클릭하면 다른 페이지로 이동
                         var rand = Random().nextInt(listfood.length);
                         List<dynamic> leftlist =
                             List<int>.generate(listfood.length, (i) => i);
+                        //List->Set->List (중복제거), remove(rand) : rand번째 요소 제거 -> 한 번 뽑은 곳은 다시 뽑지 않음.
                         leftlist.toSet().toList().remove(rand);
+                        //랜덤검색 페이지로 이동
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -196,11 +196,6 @@ class _HomePage extends State<HomePage> {
                         width: 250,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                            //color: Colors.grey[300],
-                            // border: Border.all(
-                            //   color: const Color.fromARGB(255, 180, 180, 180),
-                            //   width: 1.5,
-                            // ),
                             borderRadius: BorderRadius.circular(10)),
                         child: const Text(
                           "I’m Feeling Hungry",
@@ -223,6 +218,7 @@ class _HomePage extends State<HomePage> {
         ),
       );
     } else {
+      //로딩창 띄우기
       return const LoadingPage();
     }
   }

@@ -41,6 +41,7 @@ class CustomDrawer extends StatelessWidget {
                 padding: const EdgeInsets.all(30),
                 child: Column(
                   children: [
+                    //Drawer 정보 -> 홈 , 랜덤 추천 , 태그 검색 , 일반 검색 , 즐겨찾기 , Info
                     ListTile(
                       title: const Text(
                         '홈',

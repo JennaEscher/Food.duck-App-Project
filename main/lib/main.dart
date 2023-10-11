@@ -4,24 +4,13 @@ import 'back/data_fetch.dart';
 
 _checkDataFetch() {
   CounterStorage storage = CounterStorage();
-  var t = init(storage);
-  /*
-  print(t);
-  print("name");
-  name.forEach((key, value) => print('$key : $value'));
-  print("tag");
-  tag.forEach((key, value) => print('$key : $value'));
-  print("category");
-  category.forEach((key, value) => print('$key : $value'));
-  print("trav_time");
-  trav_time.forEach((key, value) => print('$key : $value'));
-  print(tags);
-  print(categorys);*/
+  init(storage);
 }
 
 void main() {
+  //Firebase에서 데이터 가져오기
   _checkDataFetch();
-
+  //앱 실행
   runApp(const MyApp());
 }
 

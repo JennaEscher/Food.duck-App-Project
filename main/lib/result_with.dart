@@ -7,8 +7,6 @@ import 'dart:math';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-
-
 class resultlist_with extends StatefulWidget {
   final Idx;
   final List<dynamic>? leftlist;
@@ -49,7 +47,7 @@ class Result_with extends State<resultlist_with> {
           "https://www.pulsecarshalton.co.uk/wp-content/uploads/2016/08/jk-placeholder-image.jpg");
     }
     foodtag = List.generate(listfood[Index]["tags"].length,
-            (index) => '#${listfood[Index]["tags"][index]}');
+        (index) => '#${listfood[Index]["tags"][index]}');
     tagstring = foodtag.join(" ");
     _url = Uri.parse('https://forms.gle/J5nnWwScc6ehhUuQ6');
     if (listfood[Index]["NaverMap"] != null) {
@@ -57,7 +55,6 @@ class Result_with extends State<resultlist_with> {
     } else {
       maplink = null;
     }
-    print(maplink);
     if (widget.leftlist != null) {
       leftlist = widget.leftlist!.toSet().toList();
     } else {
@@ -109,7 +106,7 @@ class Result_with extends State<resultlist_with> {
                       child: TextScroll(
                         storeName,
                         velocity:
-                        const Velocity(pixelsPerSecond: Offset(30, 0)),
+                            const Velocity(pixelsPerSecond: Offset(30, 0)),
                         pauseBetween: const Duration(milliseconds: 1000),
                         mode: TextScrollMode.bouncing,
                         fadedBorder: false,
@@ -128,7 +125,7 @@ class Result_with extends State<resultlist_with> {
                               // 버튼을 클릭하면 다른 페이지로 이동
                               if (leftlist!.isNotEmpty) {
                                 var rand = leftlist![
-                                Random().nextInt(leftlist!.length)];
+                                    Random().nextInt(leftlist!.length)];
                                 leftlist!.remove(rand);
                                 Navigator.pop(context);
                                 Navigator.push(
@@ -176,7 +173,9 @@ class Result_with extends State<resultlist_with> {
                             liked.contains(Index)
                                 ? Icons.star
                                 : Icons.star_border,
-                            color: liked.contains(Index) ? Colors.amberAccent : null,
+                            color: liked.contains(Index)
+                                ? Colors.amberAccent
+                                : null,
                             semanticLabel: liked.contains(Index)
                                 ? 'Remove from saved'
                                 : 'Save',
@@ -382,7 +381,7 @@ class Result_with extends State<resultlist_with> {
                         },
                         style: TextButton.styleFrom(
                           foregroundColor:
-                          Colors.redAccent.shade200, // Text Color
+                              Colors.redAccent.shade200, // Text Color
                         ),
                         child: const Text(
                           '식당 위치 지도로 보기',
@@ -460,7 +459,7 @@ class Result_with extends State<resultlist_with> {
                       child: TextScroll(
                         storeName,
                         velocity:
-                        const Velocity(pixelsPerSecond: Offset(30, 0)),
+                            const Velocity(pixelsPerSecond: Offset(30, 0)),
                         pauseBetween: const Duration(milliseconds: 1000),
                         mode: TextScrollMode.bouncing,
                         fadedBorder: true,
@@ -492,7 +491,7 @@ class Result_with extends State<resultlist_with> {
                                   // 버튼을 클릭하면 다른 페이지로 이동
                                   if (leftlist!.isNotEmpty) {
                                     var rand = leftlist![
-                                    Random().nextInt(leftlist!.length)];
+                                        Random().nextInt(leftlist!.length)];
                                     leftlist!.remove(rand);
                                     Navigator.pop(context);
                                     Navigator.push(
@@ -602,7 +601,7 @@ class Result_with extends State<resultlist_with> {
                                 alignment: Alignment.topCenter,
                                 width: double.infinity,
                                 margin:
-                                const EdgeInsets.fromLTRB(12, 20, 12, 20),
+                                    const EdgeInsets.fromLTRB(12, 20, 12, 20),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(30),
                                   child: img,
@@ -765,10 +764,10 @@ class Result_with extends State<resultlist_with> {
                             ),
                             Container(
                               padding:
-                              const EdgeInsets.symmetric(horizontal: 20),
+                                  const EdgeInsets.symmetric(horizontal: 20),
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   TextButton(
                                     onPressed: () {

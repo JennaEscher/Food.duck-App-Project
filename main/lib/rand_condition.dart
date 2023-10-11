@@ -40,11 +40,13 @@ class _DropdownChoiceState extends State<DropdownChoice> {
               fontFamily: "NanumSquare_ac",
               fontWeight: FontWeight.w400,
             ),
+            // 카테고리 선택 UI
             onChanged: (String? value) {
               setState(() {
                 dropdownValue = value!;
               });
             },
+            // 카테고리 리스트
             items: widget.list.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
@@ -78,7 +80,7 @@ class _RandConditionState extends State<RandCondition> {
     initialSliderValue = 0.0;
     priceSliderValue = 0.0;
     dropdownValue = categorys[0];
-    list = categorys;
+    list = categorys.toList();
     list.add("전체");
     tmp = category[dropdownValue];
     super.initState();
@@ -108,6 +110,7 @@ class _RandConditionState extends State<RandCondition> {
               max: 4,
               divisions: 4,
               //label: sliderValIndicators[initialSliderValue.toInt()],
+              //슬라이더 UI
               onChanged: (double value) {
                 setState(() {
                   initialSliderValue = value;
@@ -117,6 +120,7 @@ class _RandConditionState extends State<RandCondition> {
           ),
           const SizedBox(height: 15),
           Text(
+            //실제 출력
             "소요 시간: ${sliderValIndicators[initialSliderValue.toInt()]}",
             textAlign: TextAlign.start,
             style: const TextStyle(
@@ -253,27 +257,25 @@ class _RandConditionState extends State<RandCondition> {
           ),
           onPressed: () {
             //with tag
-            if(dropdownValue == "전체") {
+            if (dropdownValue == "전체") {
               tmp = List<int>.generate(listfood.length, (i) => i);
-            }else{
+            } else {
               tmp = [...category[dropdownValue]];
               tmp = tmp.toSet().toList();
             }
 
-            print(tmp);
             for (int dis = initialSliderValue.toInt() + 1; dis < 4; dis++) {
               if (trav_time.containsKey(dis)) {
                 tmp.removeWhere((item) => trav_time[dis].contains(item));
               }
             }
-            List<int> pricelist=[];
-            for(int i = 0; i<=priceSliderValue.toInt();i++){
+            List<int> pricelist = [];
+            for (int i = 0; i <= priceSliderValue.toInt(); i++) {
               pricelist.addAll(price[i]);
             }
             pricelist.toSet().toList();
             if (price.containsKey(priceSliderValue.toInt())) {
-              tmp.removeWhere(
-                  (item) => !pricelist.contains(item));
+              tmp.removeWhere((item) => !pricelist.contains(item));
             }
 
             if (tmp.isNotEmpty) {
