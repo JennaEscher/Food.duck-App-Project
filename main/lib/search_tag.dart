@@ -13,6 +13,7 @@ class SearchTag extends StatefulWidget {
 
 class SearchPageState extends State<SearchTag> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  // 사용자가 선택한 태그에 따라 전체 결과 중에서 필터링된 결과를 보여주는 페이지
   void clickBottons() {
     setState(() {
       List<int> tmpprice = [];
@@ -395,6 +396,7 @@ class SearchPageState extends State<SearchTag> {
                     ),
                     ListView.separated(
                       shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
                       itemCount: targetIndex.length + 1,
                       itemBuilder: (context, index) {
                         if (index == targetIndex.length) {
@@ -449,7 +451,6 @@ class SearchPageState extends State<SearchTag> {
                                     liked.add(targetIndex[index]);
                                   }
                                 });
-                                print(liked);
                               },
                             ),
                           );
@@ -462,7 +463,6 @@ class SearchPageState extends State<SearchTag> {
                           endIndent: 20,
                         );
                       },
-                      scrollDirection: Axis.vertical,
                     )
                   ],
                 ),
